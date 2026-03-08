@@ -398,6 +398,9 @@
 		margin: 8px 0;
 		height: 50px;
 		box-shadow: none;
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	.boost {

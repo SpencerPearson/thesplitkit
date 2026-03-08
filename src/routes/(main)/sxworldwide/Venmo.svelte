@@ -49,6 +49,9 @@
 		flex-direction: column;
 		gap: 12px;
 		align-items: center;
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	img {
@@ -73,6 +76,9 @@
 		font-weight: 600;
 		cursor: pointer;
 		transition: background 0.2s;
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	button:hover {

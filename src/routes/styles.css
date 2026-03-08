@@ -14,6 +14,11 @@
     src: url("/fonts/LoversQuarrel-Regular.ttf") format("truetype");
   }
 
+   @font-face {
+    font-family: "Limelight";
+    src: url("/fonts/Limelight-Regular.ttf") format("truetype");
+  }
+
 
   @font-face {
     font-family: "WindSongBold";

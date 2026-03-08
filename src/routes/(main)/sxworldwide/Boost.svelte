@@ -82,6 +82,9 @@
 		box-shadow: 0 2px 1px 1px hsla(0, 0%, 100%, 0.25);
 		display: flex;
 		flex-direction: column;
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	.boost-btn:hover {

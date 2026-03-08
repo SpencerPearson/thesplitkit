@@ -86,6 +86,9 @@
 		right: 0;
 		z-index: 100;
 		backdrop-filter: blur(5px);
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	modal {
@@ -118,6 +121,9 @@
 		cursor: pointer;
 		height: 50px;
 		position: absolute;
+		font-family: 'Limelight', sans-serif;
+		font-weight: 400;
+		font-style: normal;
 	}
 
 	container {

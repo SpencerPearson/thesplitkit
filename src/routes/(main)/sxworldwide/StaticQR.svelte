@@ -15,6 +15,7 @@
 
 		QRCode.toCanvas(qrCodeCanvas, code, {
 			width: size,
+			margin: 1,
 			color: {
 				dark: '#D43A2A',
 				light: '#000000' // Fully transparent background
@@ -48,9 +49,9 @@
 		width: 100%;
 		height: 100%;
 		background-color: transparent;
-		border: none;
 		box-shadow: none;
 		aspect-ratio: 1 / 1;
+		border-radius: 5px;
 	}
 
 	canvas {
