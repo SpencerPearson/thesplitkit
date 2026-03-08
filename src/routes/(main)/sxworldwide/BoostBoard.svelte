@@ -3,7 +3,7 @@
 </script>
 
 <div class="iframe-container boost-board">
-	<iframe src={$mainSettings?.boostBoard || ''} />
+	<iframe src="https://boostboard.vercel.app/sxworldwide/" />
 </div>
 
 <style>

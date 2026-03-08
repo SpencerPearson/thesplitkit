@@ -30,7 +30,18 @@
 			showModal = true;
 		}}
 	>
-		Boost
+		🚀
+		<p>Boost</p>
+	</button>
+	<button
+		class="boost-btn boost"
+		class:mobile={isMobile}
+		on:click={() => {
+			showModal = true;
+		}}
+	>
+		⚡
+		<p>Zap</p>
 	</button>
 </div>
 
@@ -58,25 +69,28 @@
 	}
 
 	.boost-btn {
-		background: #f7931a;
+		background: hsl(6, 67%, 50%);
 		color: white;
 		border: none;
-		padding: 12px 24px;
-		border-radius: 10px;
+		padding: 0;
+		height: 100px;
+		width: 100px;
+		border-radius: 50px;
 		font-size: 48px;
 		font-weight: 600;
 		cursor: pointer;
-		transition: background 0.2s;
+		box-shadow: 0 2px 1px 1px hsla(0, 0%, 100%, 0.25);
+		display: flex;
+		flex-direction: column;
 	}
 
 	.boost-btn:hover {
-		background: #e8850f;
+		background: hsl(6, 67%, 40%);
 	}
 
-	.mobile {
-		padding: 8px 18px;
-		border-radius: 8px;
-		font-size: 36px;
-		font-weight: 500;
+	.boost-btn > p {
+		font-size: 20px;
+		margin: 0;
+		padding: 0;
 	}
 </style>

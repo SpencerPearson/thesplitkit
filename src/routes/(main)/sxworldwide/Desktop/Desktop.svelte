@@ -1,33 +1,32 @@
 <script>
-	import Boost from '../Boost.svelte';
 	import Video from '../Video.svelte';
+	import Boost from '../Boost.svelte';
 	import Chat from '../Chat.svelte';
 	import BoostBoard from '../BoostBoard.svelte';
 	import Instructions from '../Instructions.svelte';
-	import { mainSettings } from '$/stores';
+	import StaticQR from '../StaticQR.svelte';
 	export let guid;
 	export let broadcastingBlock;
 	export let throwConfetti;
 	let showInstructions = false;
 </script>
 
-<img
-	class="background"
-	alt="boo-background"
-	src={$mainSettings?.liveBackgroundUrl
-		? $mainSettings?.liveBackgroundUrl
-		: 'https://images.pexels.com/photos/10819642/pexels-photo-10819642.jpeg'}
-/>
+<img class="background" alt="background" src={'/curtains1.png'} />
 
 <container>
-	<div class="middle">
+	<div class="left">
 		<BoostBoard />
 		<Boost {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
 	</div>
 
 	<Video />
 
-	<Chat />
+	<div class="right">
+		<Chat />
+		<div class="qr-container">
+			<StaticQR />
+		</div>
+	</div>
 </container>
 
 {#if showInstructions}
@@ -51,17 +50,33 @@
 		margin: 8px;
 		overflow: hidden;
 		display: grid;
-		grid-template-columns: 300px 1fr 300px;
+		grid-template-columns: 322px 1fr 370px;
 		grid-template-rows: 1fr;
-		grid-column-gap: 8px;
+		grid-column-gap: 0px;
 		grid-row-gap: 0px;
 	}
 
-	.middle {
+	.left {
+		height: 100%;
+		width: 322px;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 100px;
-		grid-column-gap: 8px;
-		grid-row-gap: 0px;
+		grid-template-rows: 1fr 116px;
+		place-items: center;
+	}
+
+	.right {
+		height: 100%;
+		width: 100%;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 150px;
+	}
+
+	.qr-container {
+		position: relative;
+		width: 150px;
+		margin: 0 auto;
+		left: 8px;
 	}
 </style>

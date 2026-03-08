@@ -1,11 +1,10 @@
 <script>
 	import Video from '../Video.svelte';
 	import BoostBoard from '../BoostBoard.svelte';
-	import Boost from '../Boost.svelte';
+	import MobileBoost from '../MobileBoost.svelte';
 	import Chat from '../Chat.svelte';
 	import Instructions from '../Instructions.svelte';
 	let currentScreen = 'video';
-	import { mainSettings } from '$/stores';
 
 	function changeScreen(screenName) {
 		currentScreen = screenName;
@@ -17,16 +16,12 @@
 	let showInstructions = false;
 </script>
 
-<img
-	class="background"
-	alt="boo-background"
-	src={$mainSettings?.liveBackgroundUrl
-		? $mainSettings?.liveBackgroundUrl
-		: 'https://images.pexels.com/photos/10819642/pexels-photo-10819642.jpeg'}
-/>
+<img class="background" alt="background" src={'./curtains1.png'} />
+
 <nav>
 	<button on:click={changeScreen.bind(this, 'boostBoard')}>Boost Board</button>
 	<button on:click={changeScreen.bind(this, 'video')}>Video</button>
+	<button on:click={changeScreen.bind(this, 'boost')}>Boost</button>
 	<button on:click={changeScreen.bind(this, 'chat')}>Chat</button>
 </nav>
 
@@ -39,8 +34,13 @@
 		<div class="boost-board-container">
 			<BoostBoard />
 		</div>
-		<Boost isMobile={true} {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
 	</div>
+	<div class="boost" class:show={currentScreen === 'boost'}>
+		<div class="boost-container">
+			<MobileBoost {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
+		</div>
+	</div>
+
 	<div class="chat" class:show={currentScreen === 'chat'}>
 		<Chat />
 	</div>
@@ -63,11 +63,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
-		background-color: hsla(228, 16%, 70%, 0.5);
+		background-color: hsla(0, 1%, 33%, 0.5);
 	}
 
 	nav > button {
-		width: 33%;
+		width: 25%;
 		background-color: transparent;
 		box-shadow: none;
 		color: rgb(255, 255, 255);
@@ -99,8 +99,15 @@
 		width: 300px;
 	}
 
+	.boost-container {
+		display: block;
+		width: 300px;
+	}
+
 	.chat {
-		margin: 8px;
+		margin: 0px;
+		width: 100%;
+		height: 100%;
 	}
 
 	.show {

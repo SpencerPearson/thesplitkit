@@ -65,7 +65,7 @@
 		height: 50px;
 		box-shadow: none;
 		width: 180px;
-		background: #f7931a;
+		background: hsl(6, 67%, 50%);
 		color: white;
 		border: none;
 		padding: 12px 24px;
@@ -76,6 +76,6 @@
 	}
 
 	button:hover {
-		background: #e8850f;
+		background: hsl(6, 67%, 40%);
 	}
 </style>

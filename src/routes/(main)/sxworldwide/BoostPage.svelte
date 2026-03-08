@@ -388,9 +388,8 @@
 	}
 
 	button {
-		background-color: hsl(2, 35%, 52%);
-		background-color: hsl(195, 94%, 75%);
-		color: hsl(195, 100%, 25%);
+		background-color: hsl(358, 85%, 75%);
+		color: hsl(0, 0%, 15%);
 		padding: 4px 12px;
 		border: none;
 		border-radius: 25px;
@@ -402,10 +401,9 @@
 	}
 
 	.boost {
-		width: calc(100% - 16px);
 		background-color: hsl(0, 52%, 39%);
-		background-color: hsl(195, 94%, 50%);
-		color: hsl(195, 100%, 10%);
+		background-color: hsl(358, 85%, 50%);
+		color: hsl(0, 0%, 5%);
 		font-weight: 600;
 		margin: 8px 0 16px 0;
 		box-shadow: none;
@@ -415,7 +413,7 @@
 	.boost:disabled {
 		width: calc(100% - 16px);
 
-		background-color: hsl(195, 94%, 95%);
+		background-color: hsl(358, 85%, 95%);
 		color: hsl(195, 100%, 15%);
 	}
 	input,
