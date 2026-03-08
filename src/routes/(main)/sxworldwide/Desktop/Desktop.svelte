@@ -71,12 +71,12 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		grid-template-rows: 1fr 150px;
+		position: relative;
 	}
 
 	.qr-container {
 		position: relative;
 		width: 150px;
-		margin: 0 auto;
-		left: 8px;
+		place-self: end;
 	}
 </style>
