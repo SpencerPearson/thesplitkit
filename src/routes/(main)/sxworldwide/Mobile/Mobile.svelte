@@ -101,7 +101,7 @@
 
 	.boost-container {
 		display: block;
-		width: 300px;
+		width: 100%;
 	}
 
 	.chat {

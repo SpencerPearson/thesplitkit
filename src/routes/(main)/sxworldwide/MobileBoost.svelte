@@ -9,7 +9,9 @@
 </script>
 
 <div>
-	<StaticQR />
+	<div class="qr">
+		<StaticQR />
+	</div>
 	<Boost isMobile={true} {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
 </div>
 
@@ -26,5 +28,9 @@
 		justify-content: flex-end;
 		align-items: center;
 		position: relative;
+	}
+
+	.qr {
+		width: 300px;
 	}
 </style>

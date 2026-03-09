@@ -61,7 +61,7 @@
 		width: 322px;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 116px;
+		grid-template-rows: 1fr 188px;
 		place-items: center;
 	}
 
