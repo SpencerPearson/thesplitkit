@@ -24,7 +24,10 @@
 	<div class="right">
 		<Chat />
 		<div class="qr-container">
-			<StaticQR />
+			<img src="/qr-frame.png" />
+			<div class="static-qr-container">
+				<StaticQR />
+			</div>
 		</div>
 	</div>
 </container>
@@ -70,13 +73,25 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 150px;
+		grid-template-rows: 1fr 216px;
 		position: relative;
 	}
 
 	.qr-container {
 		position: relative;
-		width: 150px;
-		place-self: end;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.qr-container > img {
+		height: 200px;
+	}
+
+	.static-qr-container {
+		position: absolute;
+		width: 110px;
 	}
 </style>
