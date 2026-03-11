@@ -85,7 +85,7 @@
 				`https://boostbeach.xyz/lnurlp/tsk-${
 					broadcastingBlock.eventGuid
 						? broadcastingBlock.eventGuid
-						: '303fe7e4-32c1-4f67-977d-967f251cb6b0'
+						: 'b9f6ab8d-8885-4987-bed8-c02fc9ac94ca'
 				}/callback?amount=${
 					amount * 1000
 				}&comment=${boostagram}&senderName=${senderName}&blockGuid=${broadcastingBlock.blockGuid}`
