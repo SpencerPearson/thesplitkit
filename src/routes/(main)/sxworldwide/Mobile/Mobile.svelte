@@ -19,10 +19,10 @@
 <img class="background" alt="background" src={'./curtains1.png'} />
 
 <nav>
-	<button on:click={changeScreen.bind(this, 'boostBoard')}>Boost Board</button>
+	<button on:click={changeScreen.bind(this, 'boostBoard')}>Leader Board</button>
 	<button on:click={changeScreen.bind(this, 'video')}>Video</button>
-	<button on:click={changeScreen.bind(this, 'boost')}>Boost</button>
-	<button on:click={changeScreen.bind(this, 'chat')}>Chat</button>
+	<button on:click={changeScreen.bind(this, 'boost')}>Boost/Zap</button>
+	<button on:click={changeScreen.bind(this, 'chat')}>SuperChat</button>
 </nav>
 
 <container>
@@ -42,7 +42,9 @@
 	</div>
 
 	<div class="chat" class:show={currentScreen === 'chat'}>
-		<Chat />
+		<div class="chat-container">
+			<Chat />
+		</div>
 	</div>
 </container>
 
@@ -67,7 +69,6 @@
 	}
 
 	nav > button {
-		width: 25%;
 		background-color: transparent;
 		box-shadow: none;
 		color: rgb(255, 255, 255);
@@ -94,9 +95,10 @@
 		width: 100%;
 	}
 
-	.boost-board-container {
+	.boost-board-container,
+	.chat-container {
 		display: block;
-		width: 300px;
+		width: 333px;
 	}
 
 	.boost-container {
