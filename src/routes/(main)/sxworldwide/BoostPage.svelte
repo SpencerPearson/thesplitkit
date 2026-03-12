@@ -138,9 +138,9 @@
 
 <Modal bind:showModal bind:paymentType showNewPaymentType={true}>
 	<boost-container>
-		<h2>{broadcastingBlock.title}</h2>
+		<h2 class:is-mobile={isMobile}>{broadcastingBlock.title}</h2>
 
-		{#if isMobile}
+		{#if isMobile && paymentType !== 'qr'}
 			<div class="screen-select">
 				<button
 					on:click={() => {
@@ -214,7 +214,7 @@
 				</ul>
 			</right>
 		</panels>
-		<btn-container class:hide={isMobile && activeScreen === 'splits'}>
+		<btn-container class:hide={isMobile && activeScreen === 'splits'} class:is-mobile={isMobile}>
 			<button on:click={() => setAmount(1000)}>1,000</button>
 			<button on:click={() => setAmount(5000)}>5,000</button>
 			<button on:click={() => setAmount(10000)}>10,000</button>
@@ -399,6 +399,14 @@
 		font-family: 'Limelight', sans-serif;
 		font-weight: 400;
 		font-style: normal;
+	}
+
+	.is-mobile > button {
+		font-size: 0.95em;
+	}
+
+	h2.is-mobile {
+		font-size: 2.5em;
 	}
 
 	.boost {
