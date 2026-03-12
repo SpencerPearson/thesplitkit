@@ -8,8 +8,7 @@
 
 	let player;
 	let block;
-	$: sourceVideo =
-		$mainSettings?.liveEnclosure || 'https://owncast.bowlafterbowl.com/hls/stream.m3u8';
+	$: sourceVideo = 'https://owncast.bowlafterbowl.com/hls/stream.m3u8';
 
 	$: setSource(sourceVideo, player);
 
