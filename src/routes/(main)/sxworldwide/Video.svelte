@@ -8,12 +8,15 @@
 
 	let player;
 	let block;
-	$: sourceVideo = $mainSettings?.liveEnclosure || '';
-	// sourceVideo = 'https://listen.noagendastream.com/noagenda';
+	$: sourceVideo =
+		$mainSettings?.liveEnclosure || 'https://owncast.bowlafterbowl.com/hls/stream.m3u8';
 
 	$: setSource(sourceVideo, player);
 
 	$: console.log($mainSettings);
+
+	$: console.log(sourceVideo);
+	console.log(player);
 
 	function setSource(src, player) {
 		console.log(player);
