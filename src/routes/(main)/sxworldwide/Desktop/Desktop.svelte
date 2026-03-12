@@ -16,19 +16,19 @@
 <container>
 	<div class="left">
 		<BoostBoard />
-		<Boost {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
-	</div>
-
-	<Video />
-
-	<div class="right">
-		<Chat />
 		<div class="qr-container">
 			<img src="/qr-frame.png" />
 			<div class="static-qr-container">
 				<StaticQR />
 			</div>
 		</div>
+	</div>
+
+	<Video />
+
+	<div class="right">
+		<Chat />
+		<Boost {guid} {broadcastingBlock} bind:showInstructions {throwConfetti} />
 	</div>
 </container>
 
@@ -64,7 +64,7 @@
 		width: 322px;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 188px;
+		grid-template-rows: 1fr 216px;
 		place-items: center;
 	}
 
@@ -73,7 +73,7 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 216px;
+		grid-template-rows: 1fr 188px;
 		position: relative;
 	}
 
