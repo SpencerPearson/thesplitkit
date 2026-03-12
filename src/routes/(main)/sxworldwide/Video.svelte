@@ -27,12 +27,14 @@
 			// src = 'https://content.jwplatform.com/manifests/yp34SRmf.m3u8';
 			console.log(src);
 			if (src.includes('.m3u8')) {
-				if (player.canPlayType('application/vnd.apple.mpegurl')) {
-					player.src = src;
-					//
-					// If no native HLS support, check if HLS.js is supported
-					//
-				} else if (Hls.isSupported()) {
+				// if (player.canPlayType('application/vnd.apple.mpegurl')) {
+				// 	player.src = src;
+				// 	console.log('hi');
+				// 	//
+				// 	// If no native HLS support, check if HLS.js is supported
+				// 	//
+				// } else
+				if (Hls.isSupported()) {
 					console.log('hello hls.js!');
 					var hls = new Hls();
 					// bind them together
