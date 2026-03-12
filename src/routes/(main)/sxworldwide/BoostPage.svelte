@@ -71,31 +71,22 @@
 		// throwConfetti(amount);
 		// showModal = false;
 		// return;
+
 		if (paymentType === 'qr') {
 			localStorage.setItem('senderName', senderName);
-			console.log(broadcastingBlock);
-			let fountainName = senderName ? `${senderName} - ` : '';
-			let fountainGram = `${fountainName}${boostagram}`;
-			console.log(
-				`https://api.fountain.fm/v1/lnurlp/sobig/pay?amount=${
-					amount * 1000
-				}&comment=${fountainGram}}`
-			);
-			let res = await fetch(
-				`https://boostbeach.xyz/lnurlp/tsk-${
-					broadcastingBlock.eventGuid
-						? broadcastingBlock.eventGuid
-						: 'b9f6ab8d-8885-4987-bed8-c02fc9ac94ca'
-				}/callback?amount=${
-					amount * 1000
-				}&comment=${boostagram}&senderName=${senderName}&blockGuid=${broadcastingBlock.blockGuid}`
-			);
+			let cb = await fetch('https://coinos.io/.well-known/lnurlp/sxworldwide');
+			let cb_data = await cb.json();
 
-			// let res = await fetch(
-			// 	`https://api.fountain.fm/v1/lnurlp/sobig/pay?amount=${
-			// 		amount * 1000
-			// 	}&comment=${fountainGram}}`
-			// );
+			let callback = `${cb_data.callback}?amount=${amount * 1000}&comment=${JSON.stringify({
+				n: senderName,
+				c: boostagram,
+				t: Math.floor(new Date().getTime() / 1000)
+			})}`;
+
+			console.log(callback);
+
+			let res = await fetch(callback);
+
 			let data = await res.json();
 			invoice = data.pr;
 			showQR = true;
@@ -170,7 +161,10 @@
 			</div>
 		{/if}
 		<panels class:mobile={isMobile}>
-			<left class:hide={isMobile && activeScreen === 'splits'} class:fullwidth={isMobile}>
+			<left
+				class:hide={isMobile && activeScreen === 'splits'}
+				class:fullwidth={isMobile || paymentType === 'qr'}
+			>
 				{#if $user.loggedIn && paymentType === 'alby'}
 					<balance-text>
 						<h3>Balance:</h3>
@@ -202,7 +196,10 @@
 					<p class="conversion">~${satsToDollars(amount)}</p>
 				</amount-container>
 			</left>
-			<right class:hide={isMobile && activeScreen === 'boost'} class:fullwidth={isMobile}>
+			<right
+				class:hide={(isMobile && activeScreen === 'boost') || paymentType === 'qr'}
+				class:fullwidth={isMobile}
+			>
 				<header>
 					<p>Name</p>
 					<p>Split</p>
@@ -272,6 +269,7 @@
 		width: 100%;
 		justify-content: space-between;
 		height: calc(100% - 204px);
+		min-height: 290px;
 		flex: 1;
 	}
 	left,
