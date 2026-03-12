@@ -14,6 +14,7 @@ export default async function sendBoost({ block, satAmount, boostagram, senderNa
 		split: '5',
 		fee: true
 	};
+	
 
 	if (
 		!feesDestinations.some(
@@ -66,6 +67,10 @@ export default async function sendBoost({ block, satAmount, boostagram, senderNa
 		let customRecords = { 7629169: JSON.stringify(record) };
 		if (dest.customKey) {
 			customRecords[dest.customKey] = dest.customValue;
+		}
+
+		if(dest.address.includes('@')){
+			dest.type='lnaddress'
 		}
 
 		let payload = {

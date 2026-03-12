@@ -338,6 +338,12 @@
 			let ts = timeStamp || 0;
 			broadcastingBlock = clone(block);
 			serverData = processBlock(clone(block));
+			serverData?.value?.destinations?.forEach((v) => {
+				if (v.address.includes('@')) {
+					v.type = 'lnaddress';
+				}
+			});
+			console.log(serverData.value);
 			serverData.broadcastTimestamp = new Date().getTime();
 			serverData.startTime = ts;
 			serverData.eventTimestamp = eventTimestamp;

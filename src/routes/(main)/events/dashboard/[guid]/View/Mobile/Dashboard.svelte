@@ -336,6 +336,12 @@
 		if (block) {
 			broadcastingBlock = clone(block);
 			serverData = processBlock(clone(block));
+			serverData?.value?.destinations?.forEach((v) => {
+				if (v.address.includes('@')) {
+					v.type = 'lnaddress';
+				}
+			});
+			console.log(serverData.value);
 			broadcastingBlockGuid = block?.blockGuid;
 			if (timeStamp && block?.blockGuid !== $defaultBlockGuid) {
 				let foundBlock = $liveBlocks.find((v) => v?.blockGuid === block?.blockGuid);
