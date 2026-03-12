@@ -9,7 +9,7 @@
 	let venmoWindow;
 
 	function openVenmo() {
-		const url = 'https://account.venmo.com/u/gus-linden';
+		const url = 'https://account.venmo.com/u/sxworldwide';
 
 		if (venmoWindow && !venmoWindow.closed) {
 			venmoWindow.focus();
@@ -38,7 +38,7 @@
 	height={isDesktop ? '480px' : undefined}
 >
 	<div>
-		<img src="/boostbeach-venmo.png" alt="Venmo QR" />
+		<img src="/sxww-venmo.jpg" alt="Venmo QR" />
 		<button on:click={openVenmo}>Open Venmo</button>
 	</div>
 </Modal>
@@ -55,8 +55,8 @@
 	}
 
 	img {
-		max-width: none;
-		max-height: none;
+		max-width: 100%;
+		max-height: 100%;
 		width: auto;
 		height: auto;
 	}
