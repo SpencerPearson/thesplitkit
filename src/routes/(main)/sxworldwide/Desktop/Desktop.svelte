@@ -53,7 +53,7 @@
 		margin: 8px;
 		overflow: hidden;
 		display: grid;
-		grid-template-columns: 322px 1fr 370px;
+		grid-template-columns: 333px 1fr 333px;
 		grid-template-rows: 1fr;
 		grid-column-gap: 0px;
 		grid-row-gap: 0px;
