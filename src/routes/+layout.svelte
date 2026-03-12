@@ -81,7 +81,12 @@
 			window.history.replaceState(null, null, urlWithoutQuery);
 		} else if (
 			!$user.loggedIn &&
-			!['/(main)/spotlight25', '/(main)/boostbeach'].find((v) => v === $page?.route?.id)
+			![
+				'/(main)/spotlight25',
+				'/(main)/sxworldwide',
+				'/(main)/sxworldwide/live',
+				'/(main)/boostbeach'
+			].find((v) => v === $page?.route?.id)
 		) {
 			console.log('refresh');
 			let res = await fetch(remoteServer + '/api/alby/refresh', {
