@@ -7,8 +7,8 @@
 
 	import { Confetti } from 'svelte-confetti';
 
-	export let guid = '303fe7e4-32c1-4f67-977d-967f251cb6b0';
-	export let controlGuid = '303fe7e4-32c1-4f67-977d-967f251cb6b0';
+	export let guid = 'b9f6ab8d-8885-4987-bed8-c02fc9ac94ca';
+	export let controlGuid = 'b9f6ab8d-8885-4987-bed8-c02fc9ac94ca';
 
 	let isMobile = false;
 	let broadcastingBlock = {};

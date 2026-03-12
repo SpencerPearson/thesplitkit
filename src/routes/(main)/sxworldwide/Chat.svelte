@@ -1,6 +1,6 @@
 <div class="chat">
 	<!-- <img src="/chat-top3.png" /> -->
-	<iframe src={'https://boostboard.vercel.app/list/'} />
+	<iframe src={'https://boostboard.vercel.app/sxworldwide/list.html'} />
 	<!-- <img class="bottom" src="/chat-bottom.png" /> -->
 </div>
 
