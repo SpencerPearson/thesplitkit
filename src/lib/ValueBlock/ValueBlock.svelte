@@ -27,11 +27,19 @@
 			...data.value.destinations,
 			{ name: '', address: '', type: 'node', customKey: '', customValue: '', split: '' }
 		];
+
 		calculateTotalPercentage();
 		showWalletModal = true;
 	}
 
 	function updatevalue(index, key, value) {
+		if (key === 'address') {
+			if (value.includes('@')) {
+				data.value.destinations[index].type = 'lnaddress';
+			} else {
+				data.value.destinations[index].type = 'node';
+			}
+		}
 		data.value.destinations[index][key] = value;
 		if (key === 'split') {
 			calculateTotalPercentage();
