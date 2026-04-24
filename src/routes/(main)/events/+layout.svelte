@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+	import Spinner from '$lib/loaders/Spinner.svelte';
 
 	import { user, loaded, userReady, liveBlocks, activePageGuid } from '$/stores';
 
@@ -27,10 +28,10 @@
 	{#if !unmounted}
 		{#if showLoading}
 			<loading>
-				<img src="/splitkit300.png" />
+				<Spinner size={48} label="Loading event data" />
 			</loading>
 		{:else if !$user?.loggedIn && guid !== 'test'}
-			<div>
+			<div class="login-required page-surface">
 				<h2>Please <a href="/login"> Log In </a> to Continue</h2>
 			</div>
 		{:else}
@@ -46,7 +47,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding-top: 40px;
+		padding: 40px 16px 16px;
+	}
+
+	.login-required {
+		padding: 22px;
+		border-radius: 16px;
 	}
 
 	loading {
@@ -56,30 +62,6 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
-	}
-
-	img {
-		width: 1200px;
-		height: 1200px;
-		animation: ripple 4s linear;
-		position: fixed;
-		z-index: 99;
-	}
-
-	@keyframes ripple {
-		0% {
-			transform: scale(0.2);
-			opacity: 0;
-		}
-
-		25% {
-			transform: scale(0.2);
-			opacity: 1;
-		}
-
-		100% {
-			transform: scale(1);
-			opacity: 1;
-		}
+		min-height: 220px;
 	}
 </style>

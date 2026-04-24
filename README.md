@@ -1,38 +1,76 @@
-# create-svelte
+# The Split Kit (Frontend)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+The Split Kit frontend for building and switching live value split blocks during
+podcast streams.
 
-## Creating a project
+This app talks to a companion backend (`thesplitkit-api`) for auth, event/block
+CRUD, Alby OAuth, Podcast Index search, and realtime broadcast updates.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## What This Repo Contains
+
+- SvelteKit UI application (`src/`)
+- Event creation and dashboard editing workflows
+- Live presentation routes (`/live/*`, `/promotion/*`, `/video/*`)
+- Shared design tokens with light/dark theme toggling
+
+## Prerequisites
+
+- Node.js 20+ recommended
+- `thesplitkit-api` checked out as a sibling directory:
+  - `../thesplitkit-api`
+
+## Environment
+
+Create `./.env.local` from `./.env.example`:
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+VITE_ALBY_CLIENT_ID=your-alby-client-id
+VITE_ALBY_CLIENT_ID_PROD=your-production-alby-client-id
 ```
 
-## Developing
+## Local Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start frontend + sibling API together:
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+This runs:
 
-To create a production version of your app:
+- frontend on `http://localhost:3000`
+- API via `../thesplitkit-api` (default `http://localhost:8010`)
+
+If you only want the frontend process:
+
+```bash
+npm run vite
+```
+
+## Build / Preview
 
 ```bash
 npm run build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+## Key Runtime Contracts
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Auth/session endpoints under `/api/sk/*`
+- Alby OAuth/payment endpoints under `/api/alby/*`
+- Podcast Index proxy/search endpoints:
+  - `/api/queryindex`
+  - `/api/queryindex/search`
+- Realtime updates on `/event` Socket.IO namespace
+
+## Current Focus
+
+- Compatibility-first reliability for live value block switching
+- UI modernization (material-inspired, theme-aware components)
+- Incremental refactor of nested dashboard/live child components

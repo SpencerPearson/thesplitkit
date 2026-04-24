@@ -159,7 +159,7 @@
 		amount = value;
 	}
 	let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}`;
-	redirectUrl += `&response_type=code&redirect_uri=${$page.url.href}`;
+	redirectUrl += `&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}`;
 	redirectUrl += `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 
 	function closeInfoModal() {
@@ -217,7 +217,7 @@
 </svelte:head>
 
 {#if loaded}
-	<container>
+	<container class="page-surface motion-fade-in">
 		<h1>{@html `${getTitle(block)}`}</h1>
 		<image-container>
 			<img
@@ -260,7 +260,7 @@
 			<canvas bind:this={qrCodeCanvas} />
 		{:else}
 			<button
-				class="boost"
+				class="boost ui-btn ui-btn-accent"
 				on:click={() => {
 					if ($user.loggedIn) {
 						showModal = true;
@@ -277,11 +277,11 @@
 
 {#if showModal}
 	<Modal bind:showModal>
-		<boost-container>
+		<boost-container class="ui-stack">
 			<h2>{activeBlock.title}</h2>
 			<label>
 				Your Name
-				<input type="text" bind:value={senderName} />
+				<input class="ui-input" type="text" bind:value={senderName} />
 			</label>
 			<textarea bind:value={boostagram} rows="4" placeholder="Enter your message here..." />
 			<balance-text>
@@ -294,7 +294,7 @@
 			</amount-text>
 			<amount-container>
 				<input
-					class="amount"
+					class="amount ui-input"
 					type="number"
 					bind:value={amount}
 					step="1"
@@ -307,12 +307,12 @@
 				<p class="conversion">~${satsToDollars(amount)}</p>
 			</amount-container>
 			<btn-container>
-				<button on:click={() => setAmount(1000)}>1k</button>
-				<button on:click={() => setAmount(5000)}>5k</button>
-				<button on:click={() => setAmount(10000)}>10k</button>
-				<button on:click={() => setAmount(25000)}>25k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(1000)}>1k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(5000)}>5k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(10000)}>10k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(25000)}>25k</button>
 			</btn-container>
-			<button class="boost" on:click={handleBoost}>Boost 🚀</button>
+			<button class="boost ui-btn ui-btn-accent" on:click={handleBoost}>Boost 🚀</button>
 		</boost-container>
 	</Modal>
 {/if}
@@ -320,8 +320,15 @@
 {#if showInfoModal}
 	<blurred-background
 		class="info"
+		role="button"
+		tabindex="0"
 		on:mousedown|self={closeInfoModal}
 		on:touchend|self={closeInfoModal}
+		on:keydown={(event) => {
+			if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+				closeInfoModal();
+			}
+		}}
 	>
 		<info-modal>
 			<button class="close icon" on:click={closeInfoModal}>
@@ -337,21 +344,16 @@
 {/if}
 
 <style>
-	:global(body) {
-		background-color: white;
-		color: #121212;
-		font-family: Arial, sans-serif;
-		margin: 0;
-		padding: 0;
-	}
 	container {
 		max-width: 450px;
 		min-width: 300px;
-		margin: 0 auto;
+		margin: 10px auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 100%;
+		height: calc(100% - 20px);
+		padding: 12px;
+		box-sizing: border-box;
 	}
 	h1 {
 		text-align: center;
@@ -406,10 +408,14 @@
 	boost-container textarea {
 		width: calc(100% - 8px);
 		resize: none;
-		margin: 8px 0;
+		margin: 8px 0 0;
 		height: 200px;
-		padding: 4px;
+		padding: 8px;
 		flex: 1;
+		border-radius: 12px;
+		border: 1px solid var(--md-border);
+		background: var(--md-surface-soft);
+		color: var(--md-text);
 	}
 
 	balance-text {
@@ -489,6 +495,7 @@
 	}
 	input[type='number'] {
 		-moz-appearance: textfield;
+		appearance: textfield;
 	}
 
 	label {
@@ -498,10 +505,7 @@
 	}
 
 	button {
-		background-color: rgb(0, 132, 180);
-		color: white;
 		padding: 4px 12px;
-		border: 1px solid transparent;
 		border-radius: 25px;
 		font-size: 1.05em;
 		cursor: pointer;
@@ -511,8 +515,6 @@
 
 	.boost {
 		width: calc(100% - 16px);
-		background-color: #ff6680;
-		color: white;
 		font-weight: 600;
 		margin: 8px 0 16px 0;
 	}
@@ -570,8 +572,9 @@
 		overflow-y: auto;
 		overflow-x: hidden;
 		border-radius: 8px;
-		background-color: white;
+		background-color: var(--md-surface);
 		box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.4);
+		color: var(--md-text);
 	}
 
 	notes {
@@ -594,7 +597,9 @@
 		resize: none;
 		margin: 8px 0;
 		padding: 4px;
-		border: 1px solid black;
+		border: 1px solid var(--md-border);
+		background: var(--md-surface-soft);
+		color: var(--md-text);
 	}
 
 	button.close {
@@ -603,7 +608,7 @@
 		right: -4px;
 		background-color: transparent;
 		padding: 8px;
-		color: rgba(0, 0, 0, 0.75);
+		color: var(--md-text-muted);
 		z-index: 33;
 		border: 1px solid transparent;
 		width: initial;

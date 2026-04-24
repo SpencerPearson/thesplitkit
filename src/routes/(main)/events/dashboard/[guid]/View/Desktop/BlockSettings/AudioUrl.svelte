@@ -27,7 +27,7 @@
 	}
 	label {
 		display: block;
-		color: var(--color-theme-blue);
+		color: var(--md-text);
 		margin: 0;
 	}
 
@@ -38,11 +38,14 @@
 		margin-left: 4px;
 		width: calc(100% - 36px);
 		height: 21px;
+		background: var(--md-surface);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 	}
 
 	button {
-		background-color: hsl(0, 0%, 100%);
-		color: var(--color-text-0);
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -50,6 +53,7 @@
 		width: 35px;
 		margin: 0;
 		border-radius: 25px;
+		border: 1px solid var(--md-border);
 		padding: 0;
 		position: absolute;
 		right: 0;

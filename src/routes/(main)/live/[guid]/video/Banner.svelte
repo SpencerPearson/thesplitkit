@@ -11,14 +11,13 @@
 	export let activeBlock;
 
 	let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}`;
-	redirectUrl += `&response_type=code&redirect_uri=${$page.url.href}`;
+	redirectUrl += `&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}`;
 	redirectUrl += `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 </script>
 
 <div>
-	<img
-		src={block.image}
-		alt={block.title}
+	<button
+		class="banner-button"
 		on:click={() => {
 			if ($user.loggedIn) {
 				showModal = true;
@@ -27,7 +26,9 @@
 				goto(redirectUrl);
 			}
 		}}
-	/>
+	>
+		<img src={block.image} alt={block.title} />
+	</button>
 </div>
 
 <style>
@@ -36,10 +37,22 @@
 		align-items: center;
 		justify-content: center;
 		max-width: 200px;
+		border-radius: 16px;
+		background: color-mix(in oklab, var(--md-surface), transparent 18%);
+		border: 1px solid var(--md-border);
+		box-shadow: var(--md-shadow-soft);
+		padding: 6px;
+	}
+	.banner-button {
+		all: unset;
+		cursor: pointer;
+		display: block;
+		width: 100%;
 	}
 	img {
 		max-width: 100%;
 		max-height: 100%;
 		object-fit: contain;
+		border-radius: 10px;
 	}
 </style>

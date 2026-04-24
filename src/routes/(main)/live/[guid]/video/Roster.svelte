@@ -515,4 +515,47 @@
 	input {
 		font-size: 16px;
 	}
+
+	/* Theme override layer for duplicated legacy styles above */
+	boost-container {
+		color: var(--md-text);
+	}
+
+	boost-container textarea,
+	textarea {
+		background-color: var(--md-surface-soft);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
+		border-radius: 10px;
+	}
+
+	input {
+		background-color: var(--md-surface);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
+		border-radius: 10px;
+	}
+
+	button {
+		background-color: var(--md-primary);
+		color: var(--md-on-primary);
+		border: 1px solid color-mix(in oklab, var(--md-primary) 70%, black 30%);
+		box-shadow: var(--md-shadow-soft);
+	}
+
+	.boost {
+		background-color: color-mix(in oklab, var(--md-secondary) 70%, var(--md-primary) 30%);
+		color: #fff;
+	}
+
+	p.instructions {
+		color: var(--md-text);
+		background-color: color-mix(in oklab, var(--md-surface-elevated), transparent 24%);
+		border: 1px solid var(--md-border);
+		border-radius: 999px;
+	}
+
+	input[type='number'] {
+		appearance: textfield;
+	}
 </style>

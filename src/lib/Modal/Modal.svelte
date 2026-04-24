@@ -46,7 +46,15 @@
 	}
 </script>
 
-<blurred-background on:mousedown|self={onClose} on:touchend|self={onClose}>
+<blurred-background
+	role="button"
+	tabindex="0"
+	on:mousedown|self={onClose}
+	on:touchend|self={onClose}
+	on:keydown={(event) => {
+		if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') onClose();
+	}}
+>
 	<modal
 		class:dark
 		style={`
@@ -78,7 +86,7 @@
 		width: 100%;
 		height: 100%;
 		position: fixed;
-		background: transparent;
+		background: color-mix(in oklab, var(--md-bg), transparent 45%);
 		top: 0;
 		right: 0;
 		z-index: 100;
@@ -92,8 +100,10 @@
 		height: calc(100% - 32px);
 		max-width: 991px;
 		overflow: hidden;
-		border-radius: 8px;
-		background-color: white;
+		border-radius: 16px;
+		background-color: var(--md-surface);
+		color: var(--md-text);
+		border: 1px solid var(--md-border);
 		box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.75);
 		background-size: cover;
 		background-position: center;
@@ -101,9 +111,9 @@
 	}
 
 	.dark {
-		background-color: #2a2a2a;
-		color: #e0e0e0;
-		box-shadow: 0px 3px 10px 3px rgb(39, 39, 39);
+		background-color: var(--md-surface-elevated);
+		color: var(--md-text);
+		box-shadow: var(--md-shadow);
 	}
 
 	button {
@@ -134,7 +144,7 @@
 		right: 0;
 		background-color: transparent;
 		padding: 8px;
-		color: rgba(0, 0, 0, 0.75);
+		color: var(--md-text-muted);
 		z-index: 33;
 		border: 1px solid transparent;
 		box-shadow: none;

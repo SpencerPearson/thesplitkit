@@ -1,154 +1,165 @@
-<script>
-	import { page } from '$app/stores';
-	import { albyClientId } from '$/stores';
+<section class="landing">
+	<div class="hero page-surface">
+		<div class="hero-left">
+			<div class="kicker">Podcasting 2.0 Live Splits</div>
+			<h2>Design and switch live value blocks in seconds.</h2>
+			<p>
+				The Split Kit gives podcasters a smooth control room for live `valueTimeSplit` workflows:
+				build split blocks, switch the active destination during the show, and keep listeners boosting
+				the right people.
+			</p>
+			<div class="actions">
+				<a class="button-link primary" href="/login">Log In</a>
+				<a class="button-link secondary" href="/events">View Events</a>
+			</div>
+		</div>
+		<div class="hero-right">
+			<img src="/splitB300.png" alt="The Split Kit logo" />
+		</div>
+	</div>
 
-	let redirect_uri = $page.url.href;
-
-	const code = $page.url.searchParams.get('code');
-	if (code) {
-		redirect_uri = redirect_uri.split($page.url.search)[0];
-	}
-
-	redirect_uri = redirect_uri.slice(0, -1);
-
-	const redirectUrl =
-		`https://getalby.com/oauth?client_id=${albyClientId}&response_type=code&redirect_uri=` +
-		redirect_uri +
-		`&scope=account:read%20balance:read%20payments:send%20invoices:read`;
-</script>
-
-<section class="intro">
-	<div class="container">
-		<header>
-			<img src="/splitB300.png" />
-			<header-text>
-				<h2>Empower Your Projects with Lightning Network Boostagrams</h2>
-				<paragraphs>
-					<p>
-						<mobile-bold>Welcome to The Split Kit</mobile-bold>, the innovative app that harnesses
-						the power of the Lightning Network to boost your project and reward your team in the
-						process. With The Split Kit, you can create a unique and engaging promotions page for
-						your podcast, album, or event, while also enabling fans and supporters to send
-						Boostagrams – a combination of messages and Lightning Network payments – to show their
-						appreciation.
-					</p>
-					<p>
-						<a href="/login"> Log In </a>
-						to view your <a href="/events">Events</a> to get started today and elevate your project to
-						new heights with The Split Kit!
-					</p>
-				</paragraphs>
-			</header-text>
-		</header>
-		<h3>How does The Split Kit work?</h3>
+	<div class="flow page-surface">
+		<h3>How it works</h3>
 		<ol>
 			<li>
-				<strong>Build Value Blocks:</strong> The Split Kit allows you to create value blocks consisting
-				of various Lightning Addresses. These addresses represent the key contributors and collaborators
-				who bring value to your project, such as artists, developers, or marketers.
+				<strong>Build value blocks</strong>
+				<span>Define recipients, percentages, and metadata for each show state.</span>
 			</li>
 			<li>
-				<strong>Design Your Promotions Page:</strong> Customize your promotions page by uploading an
-				eye-catching image,a link, and the value block you've created. This page will showcase the key
-				elements of your promotion, enticing visitors to learn more and support your cause.
+				<strong>Attach to event pages</strong>
+				<span>Pair artwork, links, and split configurations for promotion and playback.</span>
 			</li>
 			<li>
-				<strong>Generate QR Codes and Links:</strong> Once your promotions page is ready, The Split Kit
-				will generate a QR code and a link that can be easily shared on your website, social media, or
-				any promotional materials.
+				<strong>Switch live without stress</strong>
+				<span>Move between host blocks, artist blocks, and custom moments as the show evolves.</span>
 			</li>
 			<li>
-				<strong>Boostagram Integration:</strong> When a supporter scans the QR code or clicks the link,
-				they will be directed to your promotions page, where they can send a Boostagram. A Boostagram
-				is a combination of a personal message and a payment made via the Lightning Network.
-			</li>
-			<li>
-				<strong>Reward Your Team:</strong> The payment attached to each Boostagram is automatically split
-				among the Lightning Addresses in the value block, based on the predetermined split amount. This
-				ensures that everyone who has contributed to the project receives their fair share of the support.
-				To help maintain The Split Kit, a 5% split is added to each transaction.
+				<strong>Receive and route boostagrams</strong>
+				<span>Supporters send sats + messages while payouts follow your active split logic.</span>
 			</li>
 		</ol>
 	</div>
 </section>
 
-<!-- CSS styles -->
 <style>
-	section {
+	.landing {
 		overflow: auto;
-	}
-	.container {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 15px;
-	}
-
-	header {
-		display: flex;
-	}
-
-	ol {
-		padding: 0 0 0 0.5em;
-	}
-
-	li {
-		list-style: none;
-		margin-bottom: 0.75em;
-	}
-
-	header-text {
-		padding-left: 1rem;
+		padding: 12px 8px 20px;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		gap: 14px;
+	}
+
+	.hero,
+	.flow {
+		padding: 20px;
+	}
+
+	.hero {
+		display: grid;
+		grid-template-columns: 1.25fr 0.75fr;
+		gap: 18px;
 		align-items: center;
 	}
 
-	header-text h2,
-	header-text p {
-		margin: 0 0 1rem 0;
+	.kicker {
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-theme-blue);
 	}
 
-	.intro h2 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
+	h2 {
+		margin: 0 0 10px;
+		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
 	}
 
-	.intro p {
-		font-size: 1.1rem;
-		margin-bottom: 1rem;
+	p {
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.55;
+		color: var(--color-text-1);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-top: 18px;
+	}
+
+	.button-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		border-radius: 999px;
+		padding: 10px 18px;
+		font-weight: 600;
+		border: 1px solid transparent;
+	}
+
+	.button-link.primary {
+		background: var(--md-primary);
+		color: var(--md-on-primary);
+		box-shadow: var(--md-shadow-soft);
+	}
+
+	.button-link.secondary {
+		background: var(--md-surface-soft);
+		color: var(--md-text);
+		border-color: var(--md-border);
+	}
+
+	.hero-right {
+		display: flex;
+		justify-content: center;
 	}
 
 	img {
 		object-fit: contain;
+		width: min(320px, 100%);
+		filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22));
 	}
 
-	a {
-		font-size: 1.1em;
-		font-weight: 600;
+	h3 {
+		margin: 0 0 14px;
+		font-size: 1.2rem;
 	}
 
-	@media (max-width: 799px) {
-		header {
-			flex-direction: column;
-		}
+	ol {
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 10px;
+	}
 
-		img {
-			width: 200px;
-			margin: 0 auto;
-		}
+	li {
+		list-style: none;
+		background: var(--md-surface-soft);
+		border: 1px solid var(--md-border);
+		border-radius: 14px;
+		padding: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
 
-		header h2 {
-			text-align: center;
-		}
+	li strong {
+		font-size: 0.95rem;
+	}
 
-		header paragraphs {
-			display: flex;
-			flex-direction: column-reverse;
-		}
+	li span {
+		color: var(--color-text-1);
+		font-size: 0.9rem;
+		line-height: 1.4;
+	}
 
-		mobile-bold {
-			font-weight: 600;
+	@media (max-width: 900px) {
+		.hero {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

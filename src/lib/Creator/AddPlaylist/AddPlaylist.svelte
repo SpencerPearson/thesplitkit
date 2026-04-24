@@ -53,31 +53,47 @@
 	}
 </script>
 
-<container>
+<container class="ui-stack">
 	{#if processingIndex}
 		<h2>Importing {processingIndex} of {playlistLength}</h2>
 	{:else}
-		<input bind:value placeholder="playlist guid, LN Beats link, or feed url" />
-		<button on:click={handlFetchFeed}>Import Playlist</button>
+		<input class="ui-input" bind:value placeholder="playlist guid, LN Beats link, or feed url" />
+		<button class="ui-btn" on:click={handlFetchFeed}>Import Playlist</button>
 	{/if}
 </container>
 
 <style>
 	container {
 		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 0;
 	}
 	input {
-		width: 100%;
-		margin: 0 8px;
+		flex: 1;
+		min-width: 240px;
+		margin: 0;
 	}
 
 	button {
 		width: 150px;
-		margin-right: 8px;
+		margin-right: 0;
 	}
 
 	h2 {
 		text-align: center;
 		width: 100%;
+		color: var(--md-text);
+		margin: 8px 0;
+	}
+
+	@media (max-width: 780px) {
+		container {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		button {
+			width: 100%;
+		}
 	}
 </style>

@@ -99,26 +99,26 @@
 	}
 </script>
 
-<div>
-	<button on:click={handleSelect.bind(this, 'chapter')}>
+<div class="selector-grid">
+	<button class="selector-btn" on:click={handleSelect.bind(this, 'chapter')}>
 		<icon>
 			<ChapterIcon size="40" />
 		</icon>
 		Chapter
 	</button>
-	<button on:click={handleSelect.bind(this, 'music')}>
+	<button class="selector-btn" on:click={handleSelect.bind(this, 'music')}>
 		<icon>
 			<MusicIcon size="40" />
 		</icon>
 		Music
 	</button>
-	<button on:click={handleSelect.bind(this, 'podcast')}>
+	<button class="selector-btn" on:click={handleSelect.bind(this, 'podcast')}>
 		<icon>
 			<PodcastIcon size="40" />
 		</icon>
 		Podcast
 	</button>
-	<button on:click={handleSelect.bind(this, 'playlist')}>
+	<button class="selector-btn" on:click={handleSelect.bind(this, 'playlist')}>
 		<icon>
 			<PlaylistIcon size="40" />
 		</icon>
@@ -126,7 +126,7 @@
 	</button>
 
 	{#if $copiedBlock && !handleChangeType}
-		<button on:click={handleSelect.bind(this, 'paste')}>
+		<button class="selector-btn" on:click={handleSelect.bind(this, 'paste')}>
 			<icon>
 				<CopyIcon size="40" />
 			</icon>
@@ -275,29 +275,45 @@
 	}
 	div {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
+		gap: 8px;
+	}
+
+	.selector-grid {
+		padding: 8px 0 4px;
 	}
 
 	button {
 		box-shadow: none;
 		background-color: transparent;
-		color: var(--color-text-0);
+		color: var(--md-text);
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		font-weight: 600;
 	}
 
 	icon {
 		display: block;
 		width: 50px;
 		height: 50px;
-		background-color: hsl(0, 0%, 96%);
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
+		border: 1px solid var(--md-border);
 		border-radius: 25px;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
+		box-shadow: var(--md-shadow-soft);
 		margin-bottom: 4px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.selector-btn:hover icon {
+		border-color: color-mix(in oklab, var(--md-primary) 45%, var(--md-border));
+		transform: translateY(-1px);
 	}
 
 	.help {

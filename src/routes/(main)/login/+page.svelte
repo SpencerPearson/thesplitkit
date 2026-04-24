@@ -30,11 +30,11 @@
 		console.log(data);
 	}
 
-	let redirect_uri = $page.url.origin + '/events';
+	let redirect_uri = $page.url.origin + '/';
 
 	const redirectUrl =
 		`https://getalby.com/oauth?client_id=${albyClientId}&response_type=code&redirect_uri=` +
-		redirect_uri +
+		encodeURIComponent(redirect_uri) +
 		`&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 
 	import { remoteServer } from '$/stores';

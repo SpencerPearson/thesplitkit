@@ -14,7 +14,7 @@
 		width: 100%;
 		height: 100%;
 		position: absolute;
-		background: transparent;
+		background: color-mix(in oklab, var(--md-bg), transparent 65%);
 		top: 0;
 		right: 0;
 		z-index: 101;
@@ -25,8 +25,10 @@
 		display: block;
 		position: relative;
 		padding: 20px;
-		background-color: white;
-		border-radius: 8px;
-		box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 1);
+		background-color: var(--md-surface-elevated);
+		border-radius: 14px;
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
+		box-shadow: var(--md-shadow-soft);
 	}
 </style>

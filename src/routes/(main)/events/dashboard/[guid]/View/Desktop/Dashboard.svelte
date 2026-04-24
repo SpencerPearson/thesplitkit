@@ -218,7 +218,7 @@
 		display: block;
 		height: 20px;
 		width: calc(100% - 8px);
-		background: linear-gradient(to top, transparent, white);
+		background: linear-gradient(to top, transparent, var(--md-surface));
 		position: absolute;
 		bottom: -20px;
 		z-index: 3;
@@ -237,13 +237,17 @@
 	.socket-connect {
 		margin: 0 auto 8px auto;
 		width: 250px;
-		background-image: linear-gradient(to bottom, hsl(277, 100%, 44%), hsl(277, 100%, 26.7%));
-		color: var(--color-text-1);
+		background-image: linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--md-secondary) 68%, var(--md-primary) 32%),
+			color-mix(in oklab, var(--md-secondary) 48%, black 52%)
+		);
+		color: #fff;
 	}
 
 	warning {
 		font-weight: bold;
-		color: red;
+		color: #ff8c8c;
 	}
 
 	audio {
@@ -274,8 +278,8 @@
 
 	time-stamp > controls p,
 	time-stamp > controls button {
-		background-color: white;
-		color: red;
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
 		width: 42px;
 		height: 42px;
 		padding: 0;
@@ -332,14 +336,16 @@
 		margin: 0 16px;
 		border-radius: 25px;
 		padding: 0;
-		background-color: hsl(0, 0%, 100%);
-		color: var(--color-text-0);
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
+		border: 1px solid var(--md-border);
 	}
 
 	pause,
 	play {
 		position: absolute;
-		background-color: white;
+		background-color: var(--md-surface);
+		color: var(--md-text);
 		border-radius: 24px;
 		display: flex;
 		align-items: center;
@@ -377,6 +383,9 @@
 
 	input {
 		width: 40px;
+		background: var(--md-surface);
+		color: var(--md-text);
+		border: 1px solid var(--md-border);
 	}
 
 	input[type='number']::-webkit-inner-spin-button,
@@ -387,6 +396,7 @@
 
 	input[type='number'] {
 		-moz-appearance: textfield; /* Firefox */
+		appearance: textfield;
 	}
 
 	.scroll {
@@ -394,17 +404,17 @@
 	}
 
 	.scroll.top {
-		background-color: var(--color-theme-light-purple);
-		color: hsl(277, 100%, 44%);
+		background-color: color-mix(in oklab, var(--md-secondary), transparent 82%);
+		color: var(--md-secondary);
 	}
 
 	.scroll.active {
-		background-color: var(--color-theme-light-blue);
-		color: rgb(0, 132, 180);
+		background-color: color-mix(in oklab, var(--md-primary), transparent 82%);
+		color: var(--md-primary-strong);
 	}
 
 	.scroll.bottom {
-		color: var(--color-text-0);
-		background-color: var(--color-theme-light-yellow);
+		color: var(--md-text);
+		background-color: color-mix(in oklab, var(--md-accent), transparent 78%);
 	}
 </style>

@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "concurrently \"cd ../00-curiohoster && npm run dev\" \"vite dev --host --port 3000\"",
+		"dev": "concurrently \"npm run dev --prefix ../thesplitkit-api\" \"vite dev --host --port 3000\"",
 		"vite": "vite dev --host --port 3000",
 		"build": "vite build",
 		"preview": "vite preview",
@@ -13,6 +13,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"concurrently": "^9.2.1",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
 		"svelte": "^4.0.0",

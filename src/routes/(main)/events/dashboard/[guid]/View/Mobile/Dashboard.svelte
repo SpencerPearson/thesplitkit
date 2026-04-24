@@ -550,7 +550,7 @@
 		display: block;
 		height: 20px;
 		width: calc(100% - 8px);
-		background: linear-gradient(to top, transparent, white);
+		background: linear-gradient(to top, transparent, var(--md-surface));
 		position: absolute;
 		bottom: -20px;
 		z-index: 3;
@@ -569,13 +569,17 @@
 	.socket-connect {
 		margin: 0 auto 8px auto;
 		width: 250px;
-		background-image: linear-gradient(to bottom, hsl(277, 100%, 44%), hsl(277, 100%, 26.7%));
-		color: var(--color-text-1);
+		background-image: linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--md-secondary) 68%, var(--md-primary) 32%),
+			color-mix(in oklab, var(--md-secondary) 48%, black 52%)
+		);
+		color: #fff;
 	}
 
 	warning {
 		font-weight: bold;
-		color: red;
+		color: #ff8c8c;
 	}
 
 	audio {
@@ -594,8 +598,8 @@
 	}
 
 	time-stamp button {
-		background-color: white;
-		color: red;
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
 		width: 42px;
 		height: 42px;
 		padding: 0;
@@ -603,7 +607,7 @@
 	}
 
 	time-stamp .timer-button {
-		color: var(--color-text-0);
+		color: var(--md-text);
 
 		position: relative;
 	}
@@ -611,7 +615,8 @@
 	pause,
 	play {
 		position: absolute;
-		background-color: white;
+		background-color: var(--md-surface);
+		color: var(--md-text);
 		border-radius: 24px;
 		display: flex;
 		align-items: center;

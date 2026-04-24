@@ -108,10 +108,8 @@
 
 	const redirectUrl =
 		`https://getalby.com/oauth?client_id=${albyClientId}` +
-		`&response_type=code&redirect_uri=${$page.url.href}` +
-		$page.params.guid
-			? $page.params.guid
-			: '' + `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
+		`&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}` +
+		`&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 </script>
 
 <container>
@@ -151,13 +149,10 @@
 				showModal = true;
 				activeBlock = clone(block);
 			} else {
-				let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}&response_type=code&redirect_uri=${
-					$page.url.href
-				}${
-					$page.params.guid
-						? $page.params.guid
-						: '' + `&scope=account:read%20balance:read%20payments:send%20invoices:read`
-				}`;
+				let redirectUrl =
+					`https://getalby.com/oauth?client_id=${albyClientId}` +
+					`&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}` +
+					`&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 
 				goto(redirectUrl);
 			}

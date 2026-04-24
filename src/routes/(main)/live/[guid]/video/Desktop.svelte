@@ -31,7 +31,7 @@
 		top: 0;
 		object-fit: cover;
 		z-index: -1;
-		background-color: black;
+		background-color: var(--md-bg);
 	}
 
 	container {

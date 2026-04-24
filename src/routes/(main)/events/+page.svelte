@@ -4,6 +4,7 @@
 	import CopyIcon from '$lib/icons/Copy.svelte';
 	import { remoteServer, events, userReady } from '$/stores';
 	import Event from '$lib/icons/Event.svelte';
+	import Spinner from '$lib/loaders/Spinner.svelte';
 
 	let copiedEvent;
 	let loading = false;
@@ -69,39 +70,40 @@
 	}
 </script>
 
-<container>
-	<h2>Events</h2>
+<container class="ui-page ui-stack motion-fade-in">
+	<h2 class="ui-topbar-title">Events</h2>
 	{#if loading}
 		<loading>
-			<img src="/splitkit300.png" />
+			<Spinner size={42} label="Loading events" />
 		</loading>
 	{:else}
-		<events-container>
-			<a class="create" href="/events/creator">
+		<events-container class="ui-list">
+			<a class="create ui-list-item" href="/events/creator">
 				<p>Create New Event</p>
 				<Event size="30" />
 			</a>
 			{#each $events as event}
 				<a
+					class="ui-list-item"
 					href={screenWidth > 760
 						? '/events/dashboard/' + event.guid
 						: '/events/dashboard/' + event.guid}
 				>
-					<button class="copy" on:click|preventDefault={handleCopy.bind(this, event)}>
+					<button class="copy ui-btn ui-btn-muted" on:click|preventDefault={handleCopy.bind(this, event)}>
 						<icon>
 							<CopyIcon size="20" />
 						</icon>
 					</button>
 					<p>{event.eventName}</p>
 
-					<button on:click|preventDefault={deleteEvent.bind(this, event)}>
+					<button class="ui-btn ui-btn-danger" on:click|preventDefault={deleteEvent.bind(this, event)}>
 						<Delete size="24" />
 					</button>
 				</a>
 			{/each}
 
 			{#if copiedEvent}
-				<a class="copy" href={`/events/creator/${copiedEvent.guid}`}>
+				<a class="copy ui-list-item" href={`/events/creator/${copiedEvent.guid}`}>
 					<p>Paste a copy of "{copiedEvent.eventName}"</p>
 					<CopyIcon size="30" />
 				</a>
@@ -114,8 +116,7 @@
 	container {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		height: 100%;
+		height: calc(100% - 8px);
 	}
 	events-container {
 		display: block;
@@ -125,9 +126,8 @@
 		overflow: auto;
 	}
 	h2 {
-		text-decoration: underline;
-		text-align: center;
-		margin: 4px 0;
+		text-align: left;
+		margin: 2px 8px;
 	}
 
 	a {
@@ -160,8 +160,6 @@
 
 	button {
 		padding: 2px;
-		color: var(--color-text-1);
-		background-color: hsl(0, 100%, 32%);
 		width: 30px;
 		height: 30px;
 	}
@@ -172,28 +170,12 @@
 		height: 100%;
 		justify-content: center;
 		position: relative;
-	}
-
-	img {
-		width: 200px;
-		height: 200px;
-		animation: fade-out 2s linear;
-		position: relative;
-		z-index: 100;
+		align-items: center;
+		min-height: 180px;
 	}
 
 	.copy {
-		background-color: var(--color-theme-blue);
+		background-color: color-mix(in oklab, var(--md-primary) 18%, transparent);
 	}
 
-	@keyframes fade-out {
-		0% {
-			opacity: 1;
-		}
-
-		100% {
-			transform: scale(1);
-			opacity: 0;
-		}
-	}
 </style>

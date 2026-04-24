@@ -4,9 +4,9 @@
 
 {#if $mainSettings?.liveChatEnclosure}
 	<div>
-		<img src="/chat-top3.png" />
-		<iframe src={$mainSettings?.liveChatEnclosure || ''} />
-		<img class="bottom" src="/chat-bottom.png" />
+		<img src="/chat-top3.png" alt="Chat frame top" />
+		<iframe title="Live chat" src={$mainSettings?.liveChatEnclosure || ''} />
+		<img class="bottom" src="/chat-bottom.png" alt="Chat frame bottom" />
 	</div>
 {/if}
 
@@ -22,14 +22,16 @@
 
 	img {
 		width: 100%;
+		opacity: 0.9;
 	}
 	iframe {
 		width: calc(100% - 6px);
 		border: none;
-		border-left: 4px solid rgb(39, 41, 48);
-		border-right: 3px solid rgb(39, 41, 48);
+		border-left: 4px solid color-mix(in oklab, var(--md-surface-elevated), black 35%);
+		border-right: 3px solid color-mix(in oklab, var(--md-surface-elevated), black 35%);
 		flex-grow: 1;
 		border-radius: 0 0 8px 8px;
+		background: var(--md-surface);
 	}
 
 	.bottom {

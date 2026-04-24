@@ -76,21 +76,30 @@
 	button {
 		box-shadow: none;
 		background-color: transparent;
-		color: var(--color-text-0);
+		color: var(--md-text);
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		gap: 6px;
 	}
 
 	icon {
 		display: block;
 		width: 50px;
 		height: 50px;
-		background-color: hsl(0, 0%, 96%);
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
+		border: 1px solid var(--md-border);
 		border-radius: 25px;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
+		box-shadow: var(--md-shadow-soft);
 		margin-bottom: 4px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	h2 {
+		color: var(--md-text);
+		margin: 0 0 6px;
 	}
 </style>

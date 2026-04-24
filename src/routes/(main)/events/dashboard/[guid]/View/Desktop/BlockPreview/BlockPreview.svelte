@@ -76,14 +76,9 @@
 		position: relative;
 	}
 
-	top p icon {
-		padding-right: 4px;
-		position: relative;
-	}
-
 	top button {
-		background-color: hsl(0, 0%, 96%);
-		color: var(--color-text-0);
+		background-color: var(--md-surface-soft);
+		color: var(--md-text);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -92,24 +87,8 @@
 		border-radius: 25px;
 		padding: 0;
 		margin: 0;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
-	}
-
-	top .block-type {
-		display: flex;
-		box-shadow: none;
-		background-color: transparent;
-	}
-
-	button.share {
-		position: relative;
-		top: 2px;
-		left: 2px;
-	}
-
-	button.close {
-		background-color: transparent;
-		box-shadow: none;
+		box-shadow: var(--md-shadow-soft);
+		border: 1px solid var(--md-border);
 	}
 
 	img {
@@ -136,17 +115,22 @@
 	}
 
 	h3.warning {
-		color: red;
+		color: #ff8c8c;
 	}
 
 	.change-default {
-		color: var(--color-text-purple);
-		background-color: var(--color-theme-purple);
+		color: var(--md-on-primary);
+		background-color: color-mix(in oklab, var(--md-secondary) 65%, var(--md-primary) 35%);
 		position: absolute;
 		top: 64px;
 	}
 
 	.change-default p {
 		font-size: 0.75em;
+	}
+
+	card-text h3,
+	card-text p {
+		color: var(--md-text);
 	}
 </style>

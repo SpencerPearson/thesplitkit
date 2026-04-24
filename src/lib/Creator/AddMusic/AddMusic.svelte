@@ -4,116 +4,85 @@
 	import VirtualList from 'svelte-tiny-virtual-list';
 	import Modal from '$lib/Modal/Modal.svelte';
 	import SongSelect from './SongSelect.svelte';
+	import Spinner from '$lib/loaders/Spinner.svelte';
 	export let addFeed = () => {};
 	let selectedFeed = {};
 	let podcastIndexSearchResults = [];
 	let episodes = [];
 	let showSongs = false;
 	let searchQuery = '';
-	let filteredResults = [];
+	let loadError = '';
+	let isLoading = false;
+	let searchTimer;
+	const SEARCH_DEBOUNCE_MS = 320;
+	const DEFAULT_RESULT_LIMIT = 120;
+	const SEARCH_RESULT_LIMIT = 150;
 	let cacheText = '-Results are cached. Click here to fetch latest albums.-';
 
-	onMount(fetchAlbums);
-
-	async function fetchAlbums(refresh) {
-		if (!$cachedAlbums || refresh) {
-			cacheText = '-Fetching Albums-';
-			const res = await fetch(
-				remoteServer +
-					`/api/queryindex?q=${encodeURIComponent(
-						'podcasts/bymedium?medium=music&val=lightning&max=10000'
-					)}`
-			);
-			let data = await res.json();
-			console.log(data);
-
-			// let data = { feeds: archivedFeeds };
-
-			try {
-				episodes = [];
-
-				podcastIndexSearchResults = sortByPubDate(data.feeds).filter((v) => {
-					let addFeed = true;
-					if (
-						//this removes 100% Retro Live Feed
-						[5718023].find((w) => v.id === w) ||
-						v.author === 'Gabe Barrett' ||
-						[6612768].find((w) => v.id === w)
-					) {
-						addFeed = false;
-					}
-					return addFeed;
-				});
-				filteredResults = podcastIndexSearchResults;
-				$cachedAlbums = podcastIndexSearchResults;
-				cacheText = '-Results are cached. Click here to fetch latest albums.-';
-			} catch (error) {}
-		} else {
-			episodes = [];
+	onMount(() => {
+		if ($cachedAlbums?.length) {
 			podcastIndexSearchResults = $cachedAlbums;
-			filteredResults = podcastIndexSearchResults;
+		} else {
+			runAlbumSearch('', { force: true });
 		}
-	}
-
-	function sortArrayAlphabetically(arr) {
-		const articles = ['a', 'an', 'the'];
-
-		arr.sort((a, b) => {
-			const titleA = a.title.toLowerCase();
-			const titleB = b.title.toLowerCase();
-			const wordA = titleA.split(' ')[0];
-			const wordB = titleB.split(' ')[0];
-
-			// If either word is an article, ignore it
-			const indexA = articles.includes(wordA) ? 1 : 0;
-			const indexB = articles.includes(wordB) ? 1 : 0;
-
-			// Compare the remaining words
-			const remainingA = titleA.split(' ').slice(indexA).join(' ');
-			const remainingB = titleB.split(' ').slice(indexB).join(' ');
-
-			if (remainingA < remainingB) {
-				return -1;
-			}
-			if (remainingA > remainingB) {
-				return 1;
-			}
-			return 0;
-		});
-		return arr;
-	}
+		return () => clearTimeout(searchTimer);
+	});
 
 	function sortByPubDate(arr) {
-		console.log(arr);
 		arr.sort((a, b) => (a.newestItemPubdate < b.newestItemPubdate ? 1 : -1));
-		console.log(arr);
 		return arr;
 	}
 
-	async function searchPI() {
-		console.log(searchQuery);
-
-		return podcastIndexSearchResults.filter(
-			(v) =>
-				v.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				v.author.toLowerCase().includes(searchQuery.toLowerCase())
-		);
+	function scheduleSearch(event) {
+		searchQuery = event.target.value;
+		clearTimeout(searchTimer);
+		searchTimer = setTimeout(() => {
+			runAlbumSearch(searchQuery);
+		}, SEARCH_DEBOUNCE_MS);
 	}
 
-	$: filterSearch(searchQuery);
+	async function runAlbumSearch(term = '', options = {}) {
+		loadError = '';
+		isLoading = true;
 
-	async function filterSearch() {
-		if (searchQuery) {
-			filteredResults = (await searchPI()) || [];
-		} else {
-			filteredResults = podcastIndexSearchResults;
+		try {
+			const normalizedTerm = term.trim();
+			const max = normalizedTerm ? SEARCH_RESULT_LIMIT : DEFAULT_RESULT_LIMIT;
+			const res = await fetch(
+				remoteServer +
+					`/api/queryindex/search?term=${encodeURIComponent(normalizedTerm)}&max=${max}`
+			);
+			const data = await res.json();
+			if (!res.ok) {
+				throw new Error(data?.message || data?.description || `queryindex failed (${res.status})`);
+			}
+			if (!Array.isArray(data?.feeds)) {
+				throw new Error('Podcast Index search returned an invalid response.');
+			}
+
+			episodes = [];
+			podcastIndexSearchResults = sortByPubDate(data.feeds);
+			if (!normalizedTerm || options.force) {
+				$cachedAlbums = podcastIndexSearchResults;
+			}
+		} catch (error) {
+			console.error('runAlbumSearch error:', error);
+			podcastIndexSearchResults = [];
+			loadError = error?.message || 'Failed to load albums from Podcast Index.';
+		} finally {
+			isLoading = false;
 		}
+	}
+
+	function upsertEpisodes(feedGuid, nextEpisodes) {
+		const feed = podcastIndexSearchResults.find((v) => v.podcastGuid === feedGuid);
+		if (feed) feed.episodes = nextEpisodes;
+		const cached = $cachedAlbums?.find((v) => v.podcastGuid === feedGuid);
+		if (cached) cached.episodes = nextEpisodes;
 	}
 
 	async function fetchEpisodes(guid, index, feed) {
-		console.log(feed);
 		if (!feed.episodes) {
-			console.log(feed);
 			showSongs = true;
 			let feedUrl =
 				remoteServer + `/api/queryindex?q=${encodeURIComponent(`/podcasts/byguid?guid=${guid}`)}`;
@@ -121,12 +90,9 @@
 				remoteServer +
 				`/api/queryindex?q=${encodeURIComponent(`/episodes/bypodcastguid?guid=${guid}&max=1000`)}`;
 
-			let res = await fetch(feedUrl);
-			let data = await res.json();
 			Promise.all([fetch(feedUrl), fetch(episodesUrl)])
 				.then(async ([feedRes, episodesRes]) => {
 					let data = await feedRes.json();
-					console.log(data);
 					let feed = data.feed;
 
 					let episodesData = await episodesRes.json();
@@ -137,17 +103,16 @@
 					episodes = feed.episodes || [];
 					selectedFeed = feed;
 
-					$cachedAlbums.find((v) => v.podcastGuid === feed.podcastGuid).episodes = episodes;
-					// $cachedAlbums.find((v) => v.podcastGuid === feed.podcastGuid).episodes = episodes;
+					upsertEpisodes(feed.podcastGuid, episodes);
 				})
 				.catch((err) => {
 					console.error('Error fetching episodes:', err);
 				});
 		} else {
 			showSongs = true;
-			selectedFeed = $cachedAlbums.find((v) => v.podcastGuid === feed.podcastGuid);
+			selectedFeed =
+				podcastIndexSearchResults.find((v) => v.podcastGuid === feed.podcastGuid) || feed;
 			episodes = selectedFeed.episodes;
-			console.log(episodes);
 		}
 	}
 
@@ -164,69 +129,86 @@
 
 <albums>
 	<albums-top>
-		<input bind:value={searchQuery} placeholder="filter albums" />
+		<input class="ui-input" bind:value={searchQuery} on:input={scheduleSearch} placeholder="filter albums" />
 		{#if $cachedAlbums}
-			<p on:click={fetchAlbums.bind(this, true)}>
+			<button class="refresh ui-btn ui-btn-muted" on:click={() => runAlbumSearch(searchQuery, { force: true })}>
 				{cacheText}
-			</p>
+			</button>
 		{/if}
 	</albums-top>
 	<section bind:clientHeight={sectionHeight} bind:clientWidth={sectionWidth}>
-		{#if podcastIndexSearchResults.length}
-			{#if filteredResults.length}
-				<VirtualList
-					bind:this={virtualList}
-					bind:height={listHeight}
-					width="100%"
-					{scrollToIndex}
-					itemCount={filteredResults.length}
-					itemSize={filteredResults.map((v) => {
-						let charPerRow = Math.floor((sectionWidth - 86) / 14);
-						let rows = Math.ceil((v?.title.length || 0) / charPerRow) + 1;
-						let titleHeight = 25 * rows;
-						return titleHeight + 32;
-					})}
-					overscanCount={5}
-				>
-					<div slot="item" let:index let:style {style} class="row">
-						<div class="albums">
-							<card
-								on:click={fetchEpisodes.bind(
-									this,
-									filteredResults[index]?.podcastGuid,
-									index,
-									filteredResults[index]
-								)}
-							>
-								{#if !$mainSettings?.lowBandwidth?.images}
-									<img
-										src={filteredResults[index]?.artwork || filteredResults[index]?.image}
-										alt={filteredResults[index]?.title}
-										width="60"
-										height="60"
-									/>
-								{/if}
-								<div>
-									<h3>{filteredResults[index]?.title}</h3>
-									<p>{filteredResults[index]?.author}</p>
+		{#if loadError}
+			<h2>{loadError}</h2>
+		{:else if isLoading}
+			<loading-state>
+				<Spinner size={36} label="Loading songs" />
+			</loading-state>
+		{:else if podcastIndexSearchResults.length}
+			<VirtualList
+				bind:this={virtualList}
+				bind:height={listHeight}
+				width="100%"
+				{scrollToIndex}
+				itemCount={podcastIndexSearchResults.length}
+				itemSize={podcastIndexSearchResults.map((v) => {
+					let charPerRow = Math.floor((sectionWidth - 86) / 14);
+					let rows = Math.ceil((v?.title.length || 0) / charPerRow) + 1;
+					let titleHeight = 25 * rows;
+					return titleHeight + 32;
+				})}
+				overscanCount={5}
+			>
+				<div slot="item" let:index let:style {style} class="row">
+					<div class="albums">
+						<card
+							role="button"
+							tabindex="0"
+							on:click={fetchEpisodes.bind(
+								this,
+								podcastIndexSearchResults[index]?.podcastGuid,
+								index,
+								podcastIndexSearchResults[index]
+							)}
+							on:keydown={(event) => {
+								if (event.key === 'Enter' || event.key === ' ') {
+									event.preventDefault();
+									fetchEpisodes(
+										podcastIndexSearchResults[index]?.podcastGuid,
+										index,
+										podcastIndexSearchResults[index]
+									);
+								}
+							}}
+						>
+							{#if !$mainSettings?.lowBandwidth?.images}
+								<img
+									src={podcastIndexSearchResults[index]?.artwork ||
+										podcastIndexSearchResults[index]?.image}
+									alt={podcastIndexSearchResults[index]?.title}
+									width="60"
+									height="60"
+								/>
+							{/if}
+							<div>
+								<h3>{podcastIndexSearchResults[index]?.title}</h3>
+								<p>{podcastIndexSearchResults[index]?.author}</p>
 
-									<p>
-										{filteredResults[index]?.newestItemPubdate
-											? 'Latest release: ' +
-											  new Date(
-													filteredResults[index]?.newestItemPubdate * 1000
-											  ).toLocaleDateString()
-											: ''}
-									</p>
-								</div>
-								<div style={'width: 40px;'} />
-							</card>
-						</div>
+								<p>
+									{podcastIndexSearchResults[index]?.newestItemPubdate
+										? 'Latest release: ' +
+										  new Date(
+												podcastIndexSearchResults[index]?.newestItemPubdate * 1000
+										  ).toLocaleDateString()
+										: ''}
+								</p>
+							</div>
+							<div style={'width: 40px;'} />
+						</card>
 					</div>
-				</VirtualList>
-			{/if}
+				</div>
+			</VirtualList>
 		{:else}
-			<h2>Loading Songs</h2>
+			<h2>No results found</h2>
 		{/if}
 	</section>
 </albums>
@@ -247,25 +229,25 @@
 	}
 
 	albums-top {
-		display: block;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
 		width: calc(100% - 16px);
 		position: relative;
 		margin: 0 8px;
-		height: 72px;
+		min-height: 72px;
 	}
 
 	input {
-		margin: 8px 0;
-		padding: 4px;
-		width: calc(100% - 12px);
-		border-radius: 4px;
-		border: 1px solid gray;
-		font-size: 1.1em;
+		width: 100%;
+		box-sizing: border-box;
 	}
 
-	albums-top > p {
-		text-align: center;
-		cursor: pointer;
+	button.refresh {
+		align-self: center;
+		padding: 6px 12px;
+		font-size: 0.85rem;
+		min-height: 32px;
 	}
 
 	section {
@@ -279,6 +261,14 @@
 
 	h2 {
 		text-align: center;
+		color: var(--md-text);
+	}
+
+	loading-state {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-top: 36px;
 	}
 
 	h3 {
@@ -291,17 +281,20 @@
 	card {
 		display: flex;
 		align-items: center;
-		padding: 4px;
-		box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.75);
-		border-radius: 8px;
+		padding: 8px;
+		box-shadow: var(--md-shadow-soft);
+		border-radius: 12px;
 		width: calc(100% - 24px);
 		margin: 4px 8px;
+		background: var(--md-surface);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 	}
 
 	img {
-		border: 1px solid gray;
+		border: 1px solid var(--md-border);
 		margin-right: 0.5em;
-		border-radius: 4px;
+		border-radius: 6px;
 	}
 	h3 {
 		margin: 0;

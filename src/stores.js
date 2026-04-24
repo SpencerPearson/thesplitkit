@@ -1,9 +1,12 @@
 import { writable } from 'svelte/store';
 import { dev } from '$app/environment';
 
-export const remoteServer = dev ? 'http://localhost:8000' : 'https://api.thesplitkit.com';
+const devAlbyClientId = import.meta.env.VITE_ALBY_CLIENT_ID || '32dVOIuGiA';
+const prodAlbyClientId = import.meta.env.VITE_ALBY_CLIENT_ID_PROD || 'GshATUDCSc';
+
+export const remoteServer = dev ? 'http://localhost:8010' : 'https://api.thesplitkit.com';
 export const hostUrl = dev ? 'http://localhost:3000' : 'https://www.thesplitkit.com';
-export const albyClientId = dev ? '32dVOIuGiA' : 'GshATUDCSc';
+export const albyClientId = dev ? devAlbyClientId : prodAlbyClientId;
 export const albyReady = writable(false);
 export const userReady = writable(false);
 export const events = writable([]);

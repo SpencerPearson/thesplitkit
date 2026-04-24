@@ -49,17 +49,35 @@
 		top: 0;
 		object-fit: cover;
 		z-index: -1;
+		background: var(--md-bg);
 	}
 	nav {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
+		padding: 6px 4px;
+		background: color-mix(in oklab, var(--md-surface-elevated), transparent 14%);
+		border-bottom: 1px solid var(--md-border);
+		backdrop-filter: blur(8px);
 	}
 
 	nav > button {
 		width: 25%;
 		background-color: transparent;
 		box-shadow: none;
+		border-radius: 10px;
+		border: 1px solid transparent;
+		color: var(--md-text);
+		font-size: 0.74rem;
+		font-weight: 600;
+		line-height: 1.15;
+		padding: 6px 2px;
+		min-height: 36px;
+	}
+
+	nav > button:hover {
+		background: color-mix(in oklab, var(--md-primary), transparent 84%);
+		border-color: color-mix(in oklab, var(--md-primary), transparent 58%);
 	}
 
 	container {

@@ -159,7 +159,7 @@
 		amount = value;
 	}
 	let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}`;
-	redirectUrl += `&response_type=code&redirect_uri=${$page.url.href}`;
+	redirectUrl += `&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}`;
 	redirectUrl += `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 
 	function getTitle(block) {
@@ -213,7 +213,7 @@
 </svelte:head>
 
 {#if loaded}
-	<container>
+	<container class="page-surface motion-fade-in">
 		<h1>{@html `${getTitle(block)}`}</h1>
 		<image-container>
 			<img
@@ -256,7 +256,7 @@
 			<canvas bind:this={qrCodeCanvas} />
 		{:else}
 			<button
-				class="boost"
+				class="boost ui-btn ui-btn-accent"
 				on:click={() => {
 					if ($user.loggedIn) {
 						showModal = true;
@@ -273,11 +273,11 @@
 
 {#if showModal}
 	<Modal bind:showModal dark>
-		<boost-container>
+		<boost-container class="ui-stack">
 			<h2>{activeBlock.title}</h2>
 			<label>
 				Your Name
-				<input type="text" bind:value={senderName} />
+				<input class="ui-input" type="text" bind:value={senderName} />
 			</label>
 			<textarea bind:value={boostagram} rows="4" placeholder="Enter your message here..." />
 			<balance-text>
@@ -290,7 +290,7 @@
 			</amount-text>
 			<amount-container>
 				<input
-					class="amount"
+					class="amount ui-input"
 					type="number"
 					bind:value={amount}
 					step="1"
@@ -303,12 +303,12 @@
 				<p class="conversion">~${satsToDollars(amount)}</p>
 			</amount-container>
 			<btn-container>
-				<button on:click={() => setAmount(1000)}>1k</button>
-				<button on:click={() => setAmount(5000)}>5k</button>
-				<button on:click={() => setAmount(10000)}>10k</button>
-				<button on:click={() => setAmount(25000)}>25k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(1000)}>1k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(5000)}>5k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(10000)}>10k</button>
+				<button class="ui-btn ui-btn-muted" on:click={() => setAmount(25000)}>25k</button>
 			</btn-container>
-			<button class="boost" on:click={handleBoost}>Boost 🚀</button>
+			<button class="boost ui-btn ui-btn-accent" on:click={handleBoost}>Boost 🚀</button>
 		</boost-container>
 	</Modal>
 {/if}
@@ -325,30 +325,16 @@
 {/if}
 
 <style>
-	:global(body) {
-		background-color: #121212;
-		color: #e0e0e0;
-		font-family: Arial, sans-serif;
-		margin: 0;
-		padding: 0;
-	}
-
-	h1,
-	h2,
-	h3,
-	p,
-	a {
-		color: #ffffff;
-	}
-
 	container {
 		max-width: 450px;
 		min-width: 300px;
-		margin: 0 auto;
+		margin: 10px auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		height: 100%;
+		height: calc(100% - 20px);
+		padding: 12px;
+		box-sizing: border-box;
 	}
 	h1 {
 		text-align: center;
@@ -403,10 +389,11 @@
 	boost-container textarea {
 		width: calc(100% - 8px);
 		resize: none;
-		margin: 8px 0;
+		margin: 8px 0 0;
 		height: 200px;
-		padding: 4px;
+		padding: 8px;
 		flex: 1;
+		border-radius: 12px;
 	}
 
 	balance-text {
@@ -486,6 +473,7 @@
 	}
 	input[type='number'] {
 		-moz-appearance: textfield;
+		appearance: textfield;
 	}
 
 	label {
@@ -495,10 +483,7 @@
 	}
 
 	button {
-		background-color: rgb(0, 132, 180);
-		color: white;
 		padding: 4px 12px;
-		border: 1px solid transparent;
 		border-radius: 25px;
 		font-size: 1.05em;
 		cursor: pointer;
@@ -508,8 +493,6 @@
 
 	.boost {
 		width: calc(100% - 16px);
-		background-color: #ff6680;
-		color: white;
 		font-weight: 600;
 		margin: 8px 0 16px 0;
 	}
@@ -576,18 +559,15 @@
 		resize: none;
 		margin: 8px 0;
 		padding: 4px;
-		background-color: #2a2a2a;
-		border: none;
-
-		color: #e0e0e0;
-		outline: 1px solid #e0e0e0;
+		background-color: var(--md-surface-soft);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 	}
 
 	input {
-		background-color: #2a2a2a;
-		border: none;
-		color: #e0e0e0;
-		outline: 1px solid #e0e0e0;
+		background-color: var(--md-surface-soft);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 		padding: 2px;
 	}
 </style>

@@ -67,17 +67,19 @@
 	}
 
 	button.delete {
-		color: var(--color-text-1);
-		background-color: hsl(0, 100%, 32%);
+		color: #fff;
+		background-color: #b33a48;
+		border: 1px solid color-mix(in oklab, #b33a48 70%, black 30%);
 	}
 
 	button.copy {
-		background-color: var(--color-theme-blue);
+		background-color: var(--md-primary);
+		color: var(--md-on-primary);
 	}
 
 	button.value {
-		color: hsl(278, 100%, 92%);
-		background-color: hsl(277, 100%, 44%);
+		color: var(--md-on-primary);
+		background-color: color-mix(in oklab, var(--md-secondary) 70%, var(--md-primary) 30%);
 		width: 150px;
 		min-height: initial;
 		height: initial;

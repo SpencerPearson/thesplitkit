@@ -52,9 +52,9 @@
 
 <fetch-feed>
 	<mobile-top>
-		<input bind:value={indexQuery} on:keydown={handleEnter} placeholder="search for podcast" />
+		<input class="ui-input" bind:value={indexQuery} on:keydown={handleEnter} placeholder="search for podcast" />
 	</mobile-top>
-	<button class="search" on:click={searchPodcastIndex}>Search Directory</button>
+	<button class="search ui-btn" on:click={searchPodcastIndex}>Search Directory</button>
 </fetch-feed>
 
 {#if podcastIndexSearchResults.length && !episodeResults.length}
@@ -87,7 +87,7 @@
 				/>
 			{/if}
 			<p>{selectedFeed.title}</p>
-			<button on:click={addFeed.bind(this, selectedFeed, 'podcast')} class="add-icon">
+			<button on:click={addFeed.bind(this, selectedFeed, 'podcast')} class="add-icon ui-btn">
 				<AddBlocksIcon size="24" />
 			</button>
 		</feed-info>
@@ -112,7 +112,7 @@
 						/>
 					{/if}
 					<p>{episode?.title}</p>
-					<button on:click={addFeed.bind(this, episode, 'podcast', selectedFeed)} class="add-icon">
+					<button on:click={addFeed.bind(this, episode, 'podcast', selectedFeed)} class="add-icon ui-btn">
 						<AddBlocksIcon size="24" />
 					</button>
 				</card>
@@ -128,6 +128,7 @@
 		justify-content: center;
 		width: calc(100% - 16px);
 		margin: 0 8px;
+		gap: 8px;
 	}
 
 	mobile-top {
@@ -139,8 +140,8 @@
 	}
 
 	input {
-		margin-left: 8px;
 		width: 100%;
+		margin: 0;
 	}
 
 	ul {
@@ -166,16 +167,20 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 4px;
-		box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.75);
-		border-radius: 8px;
+		padding: 8px 10px;
+		box-shadow: var(--md-shadow-soft);
+		border-radius: 12px;
 		width: 100%;
 		margin: 4px 8px;
+		background: var(--md-surface);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 	}
 
 	img {
-		border: 1px solid gray;
+		border: 1px solid var(--md-border);
 		margin-right: 0.5em;
+		border-radius: 6px;
 	}
 	h3 {
 		margin: 0;
@@ -199,12 +204,13 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: 4px;
-		box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.75);
-		border-radius: 8px;
+		padding: 8px 10px;
+		box-shadow: var(--md-shadow-soft);
+		border-radius: 12px;
 		width: calc(100% - 16px);
 		margin: 4px 8px;
-		background-color: hsl(38, 100%, 93%);
+		background-color: var(--md-surface-soft);
+		border: 1px solid var(--md-border);
 	}
 
 	feed-info p {
@@ -216,15 +222,15 @@
 	}
 
 	button.add-icon {
-		color: var(--color-text-0);
-		background-color: hsl(38, 100%, 61%);
+		color: var(--md-on-primary);
+		background-color: var(--md-primary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		margin: 4px;
 		min-height: 40px;
 		min-width: 40px;
-		border-radius: 25px;
+		border-radius: 999px;
 		padding: 0;
 	}
 

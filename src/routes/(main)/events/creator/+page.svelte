@@ -125,39 +125,39 @@
 	};
 </script>
 
-<div>
-	<label>
-		<h2>Event Name: (required)</h2>
-		<input bind:value={eventName} />
+<div class="ui-page ui-stack motion-fade-in">
+	<label class="ui-field">
+		<span>Event Name (required)</span>
+		<input class="ui-input" bind:value={eventName} />
 	</label>
 </div>
 
 {#if eventName}
-	<h1>Event Type</h1>
+	<h1 class="event-heading">Event Type</h1>
 
-	<event-selector>
+	<event-selector class="ui-stack">
 		<button-container>
-			<button class="prerecorded selector" on:click={generateLink.bind(this, 'edit')}>
+			<button class="prerecorded selector ui-btn ui-btn-muted" on:click={generateLink.bind(this, 'edit')}>
 				<h2>Prerecorded <br />Podcast or Music Show</h2>
 			</button>
-			<button class="help" on:click={showHelp.bind(this, 'edit')}>?</button>
+			<button class="help ui-btn ui-btn-pill" on:click={showHelp.bind(this, 'edit')}>?</button>
 		</button-container><button-container>
-			<button class="selector" on:click={generateLink.bind(this, 'playlist')}>
+			<button class="selector ui-btn ui-btn-muted" on:click={generateLink.bind(this, 'playlist')}>
 				<h2>Live <br />Playlist or Music Show</h2>
 			</button>
-			<button class="help" on:click={showHelp.bind(this, 'playlist')}>?</button>
+			<button class="help ui-btn ui-btn-pill" on:click={showHelp.bind(this, 'playlist')}>?</button>
 		</button-container>
 		<button-container>
-			<button class="selector" on:click={generateLink.bind(this, 'podcast')}>
+			<button class="selector ui-btn ui-btn-muted" on:click={generateLink.bind(this, 'podcast')}>
 				<h2>Live Podcast</h2>
 			</button>
-			<button class="help" on:click={showHelp.bind(this, 'podcast')}>?</button>
+			<button class="help ui-btn ui-btn-pill" on:click={showHelp.bind(this, 'podcast')}>?</button>
 		</button-container>
 		<button-container>
-			<button class="selector" on:click={generateLink.bind(this, 'manual')}>
+			<button class="selector ui-btn ui-btn-muted" on:click={generateLink.bind(this, 'manual')}>
 				<h2>Manual</h2>
 			</button>
-			<button class="help" on:click={showHelp.bind(this, 'manual')}>?</button>
+			<button class="help ui-btn ui-btn-pill" on:click={showHelp.bind(this, 'manual')}>?</button>
 		</button-container>
 	</event-selector>
 {/if}
@@ -187,31 +187,25 @@
 		width: 100%;
 	}
 	button.selector {
-		background-color: hsl(0, 0%, 96%);
-		color: var(--color-text-0);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 50px;
+		height: 56px;
 		width: 100%;
-		border-radius: 40px;
 		padding: 0;
 		margin: 0 8px 4px 0;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
 	}
 
 	button.help {
-		background-color: var(--color-theme-yellow);
-		color: var(--color-text-0);
+		background-color: var(--md-accent);
+		color: #1d1204;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		height: 50px;
 		min-width: 50px;
-		border-radius: 40px;
 		padding: 0;
 		margin: 0 8px 4px 0;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
 		font-size: 1.2em;
 		font-weight: 550;
 	}
@@ -224,9 +218,9 @@
 		bottom: 8px;
 	}
 
-	h1 {
+	h1.event-heading {
 		text-align: center;
-		text-decoration: underline;
+		margin: 6px 0;
 	}
 
 	h2 {

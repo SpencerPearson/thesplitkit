@@ -277,22 +277,24 @@
 		<p><a href="/events">Click here to return to your events.</a></p>
 	</div>
 {:else if verifiedOwner === true}
-	<EventsHeader
-		bind:showShareModal
-		bind:showMainSettingsModal
-		blocks={$liveBlocks}
-		bind:showSelectBlock
-	/>
-	{#if $activePageGuid === guid}
-		<broadcast-blocks>
-			<Dashboard
-				bind:blocks={filteredBlocks}
-				{filterType}
-				bind:addDefaultType
-				bind:showSelectBlock
-			/>
-		</broadcast-blocks>
-	{/if}
+	<section class="ui-page ui-stack motion-fade-in">
+		<EventsHeader
+			bind:showShareModal
+			bind:showMainSettingsModal
+			blocks={$liveBlocks}
+			bind:showSelectBlock
+		/>
+		{#if $activePageGuid === guid}
+			<broadcast-blocks class="ui-surface">
+				<Dashboard
+					bind:blocks={filteredBlocks}
+					{filterType}
+					bind:addDefaultType
+					bind:showSelectBlock
+				/>
+			</broadcast-blocks>
+		{/if}
+	</section>
 {/if}
 
 {#if showShareModal}
@@ -342,6 +344,7 @@
 		display: block;
 		flex: 1;
 		height: calc(100% - 64px);
+		overflow: hidden;
 	}
 
 	.unverified {

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../thesplitbox"
+		},
+		{
+			"path": "../thesplitkit-api"
+		}
+	],
+	"settings": {}
+}

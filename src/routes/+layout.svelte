@@ -10,8 +10,29 @@
 	let email = '';
 	let password = '';
 	let showSaved = false;
+	let theme = 'light';
+
+	function applyTheme(nextTheme) {
+		theme = nextTheme;
+		if (typeof document !== 'undefined') {
+			document.documentElement.setAttribute('data-theme', nextTheme);
+		}
+		if (typeof localStorage !== 'undefined') {
+			localStorage.setItem('splitkit-theme', nextTheme);
+		}
+	}
+
+	function toggleTheme() {
+		applyTheme(theme === 'dark' ? 'light' : 'dark');
+	}
 
 	onMount(async () => {
+		const savedTheme = localStorage.getItem('splitkit-theme');
+		const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+			? 'dark'
+			: 'light';
+		applyTheme(savedTheme || preferredTheme);
+
 		if (!(await loadSKC())) {
 			loadAlby();
 		} else {
@@ -49,11 +70,15 @@
 		// $user.loggedIn = true;
 		if (code) {
 			console.log('checking Alby code');
-			let redirect_uri = $page.url.href.split('/?')[0].split('?')[0];
+			let redirect_uri = $page.url.origin + '/';
 			// redirect_uri = redirect_uri.slice(0, -1);
 
 			let res = await fetch(
-				remoteServer + '/api/alby/auth?code=' + code + '&redirect_uri=' + redirect_uri,
+				remoteServer +
+					'/api/alby/auth?code=' +
+					encodeURIComponent(code) +
+					'&redirect_uri=' +
+					encodeURIComponent(redirect_uri),
 				{
 					credentials: 'include'
 				}
@@ -140,9 +165,9 @@
 
 <div class="app">
 	{#if !['/(main)/spotlight25', '/(main)/sxworldwide', '/(main)/sxworldwide/live', '/(main)/boostbeach', '/(main)/roster/[guid]/boo', '/(main)/live/[guid]/video'].find((v) => v === $page?.route?.id)}
-		<Header />
+		<Header {theme} {toggleTheme} />
 	{/if}
-	<main>
+	<main class="shell-main">
 		<slot />
 	</main>
 </div>
@@ -152,36 +177,22 @@
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 12px;
+		box-sizing: border-box;
 	}
 
-	main {
+	main.shell-main {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 		margin: 0;
 		box-sizing: border-box;
-		overflow: hidden;
+		overflow: auto;
 		height: calc(100% - 42px);
 		position: relative;
 	}
 
-	credentials {
-		display: flex;
-		flex-direction: column;
-		margin: 32px 0 72px 0;
-	}
-
-	credentials > input {
-		margin-bottom: 8px;
-	}
-
-	credentials > p {
-		margin: 2px 0;
-		font-weight: 550;
-	}
-
-	credentials > p:last-of-type {
-		margin-bottom: 8px;
-	}
 </style>

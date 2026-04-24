@@ -1,4 +1,33 @@
 <script>
+	export let size = 34;
+	export let label = 'Loading';
+</script>
+
+<div class="spinner-wrap" role="status" aria-label={label}>
+	<div class="spinner" style={`width:${size}px;height:${size}px;`} />
+</div>
+
+<style>
+	.spinner-wrap {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.spinner {
+		border-radius: 50%;
+		border: 3px solid color-mix(in oklab, var(--md-primary), transparent 72%);
+		border-top-color: var(--md-primary);
+		animation: spin 900ms linear infinite;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+</style>
+<script>
 	export let size = 225;
 	export let speed = 750;
 	export let color = 'var(--spinner-color)';

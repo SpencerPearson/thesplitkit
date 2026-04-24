@@ -20,7 +20,7 @@
 
 	const redirectUrl =
 		`https://getalby.com/oauth?client_id=${albyClientId}&response_type=code&redirect_uri=${
-			$page.url.href.split('/?')[0].split('?')[0]
+		encodeURIComponent($page.url.origin + '/')
 		}` + `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 </script>
 
@@ -39,18 +39,22 @@
 
 {#if expandMenu}
 	<container
+		role="button"
+		tabindex="0"
 		on:click={() => {
 			expandMenu = false;
 		}}
-		on:keypress={() => {
-			expandMenu = false;
+		on:keydown={(event) => {
+			if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') {
+				expandMenu = false;
+			}
 		}}
 	>
 		<menu>
 			<account-button-hover />
 			<ul transition:slide={{ duration: 200 }}>
 				{#if $user.loggedIn}
-					<li on:click={logout} on:keypress={logout}>Log Out</li>
+					<li><button class="menu-item" on:click={logout}>Log Out</button></li>
 
 					<li><a href="/events">Events</a></li>
 					{#if $page?.params?.guid}
@@ -98,33 +102,52 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
-		right: 8px;
+		right: 20px;
+		top: 10px;
 		margin: 0;
 	}
 
 	ul {
-		width: 150px;
-		background-color: blue;
+		width: 190px;
 		padding: 0;
 		margin: 0;
 		overflow: hidden;
-		background-color: white;
-		box-shadow: 0px 4px 10px 2px rgba(0, 0, 0, 0.75);
+		background-color: var(--md-surface-elevated);
+		border-radius: 14px;
+		border: 1px solid var(--md-border);
+		box-shadow: var(--md-shadow);
 	}
 
 	li {
-		padding: 8px;
+		padding: 0;
 		list-style: none;
-		width: calc(100% - 16px);
-		text-align: end;
+		width: 100%;
+		text-align: left;
 		cursor: pointer;
+		font-size: 0.92rem;
+		color: var(--md-text);
 	}
 	li:hover {
-		background-color: var(--color-poster-bg-1);
+		background-color: var(--color-theme-light-blue);
+	}
+
+	button.menu-item {
+		all: unset;
+		box-sizing: border-box;
+		display: block;
+		width: 100%;
+		padding: 11px 12px;
+		cursor: pointer;
+		color: inherit;
+		font-size: 0.92rem;
+		font-weight: 500;
 	}
 
 	a {
 		display: block;
 		width: 100%;
+		padding: 11px 12px;
+		color: inherit;
+		text-decoration: none;
 	}
 </style>

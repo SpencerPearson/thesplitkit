@@ -11,18 +11,31 @@
 	export let activeBlock;
 
 	let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}`;
-	redirectUrl += `&response_type=code&redirect_uri=${$page.url.href}`;
+	redirectUrl += `&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}`;
 	redirectUrl += `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 </script>
 
 <div
 	class="card"
+	role="button"
+	tabindex="0"
 	on:click={() => {
 		if ($user.loggedIn) {
 			showModal = true;
 			activeBlock = clone(block);
 		} else {
 			goto(redirectUrl);
+		}
+	}}
+	on:keydown={(event) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			if ($user.loggedIn) {
+				showModal = true;
+				activeBlock = clone(block);
+			} else {
+				goto(redirectUrl);
+			}
 		}
 	}}
 >
@@ -46,6 +59,11 @@
 		align-items: center;
 		justify-content: center;
 		max-width: 160px;
+		border-radius: 14px;
+		background: color-mix(in oklab, var(--md-surface), transparent 15%);
+		border: 1px solid var(--md-border);
+		box-shadow: var(--md-shadow-soft);
+		padding: 6px;
 	}
 
 	album {
@@ -54,6 +72,7 @@
 	}
 	.border {
 		width: 100%;
+		opacity: 0.86;
 	}
 
 	.artwork {

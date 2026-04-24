@@ -180,11 +180,14 @@
 		display: flex;
 		align-items: center;
 		padding: 4px;
-		box-shadow: 0 2px 8px 0px rgba(0, 0, 0, 0.75);
-		border-radius: 8px;
+		box-shadow: var(--md-shadow-soft);
+		border-radius: 12px;
 		width: calc(100% - 24px);
 		max-width: 720px;
 		margin: 4px 8px;
+		background: var(--md-surface);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
 	}
 
 	card.songs {
@@ -199,16 +202,17 @@
 	}
 
 	img {
-		border: 1px solid gray;
+		border: 1px solid var(--md-border);
 		margin-right: 0.5em;
+		border-radius: 6px;
 	}
 	h3 {
 		margin: 0;
 	}
 
 	button {
-		color: var(--color-text-0);
-		background-color: hsl(38, 100%, 61%);
+		color: var(--md-on-primary);
+		background-color: var(--md-primary);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -220,8 +224,8 @@
 	}
 
 	button.add-icon {
-		color: var(--color-text-1);
-		background-color: rgb(0, 132, 180);
+		color: var(--md-on-primary);
+		background-color: var(--md-primary-strong);
 
 		display: flex;
 		align-items: center;
@@ -268,10 +272,14 @@
 	.shimmer {
 		position: relative;
 		overflow: hidden;
-		background: linear-gradient(to right, hsl(38, 100%, 93%), hsl(38, 75%, 61%));
+		background: linear-gradient(
+			to right,
+			color-mix(in oklab, var(--md-primary), transparent 88%),
+			color-mix(in oklab, var(--md-primary), transparent 78%)
+		);
 	}
 
 	.active {
-		background-color: antiquewhite;
+		background-color: color-mix(in oklab, var(--md-primary), transparent 84%);
 	}
 </style>

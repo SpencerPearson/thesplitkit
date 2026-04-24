@@ -13,7 +13,7 @@
 	export let paymentType;
 
 	let redirectUrl = `https://getalby.com/oauth?client_id=${albyClientId}`;
-	redirectUrl += `&response_type=code&redirect_uri=${$page.url.href}`;
+	redirectUrl += `&response_type=code&redirect_uri=${encodeURIComponent($page.url.origin + '/')}`;
 	redirectUrl += `&scope=account:read%20balance:read%20payments:send%20invoices:read`;
 </script>
 

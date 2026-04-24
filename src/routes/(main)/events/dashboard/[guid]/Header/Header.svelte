@@ -50,15 +50,15 @@
 	}
 </script>
 
-<header>
-	<button class="save" type="submit" on:click={saveState}>
+<header class="ui-topbar ui-surface motion-fade-in">
+	<button class="save ui-btn ui-btn-muted" type="submit" on:click={saveState}>
 		<Save size="32" />
 	</button>
-	<button on:click={() => (showShareModal = true)}>
+	<button class="ui-btn ui-btn-muted" on:click={() => (showShareModal = true)}>
 		<Share size="32" />
 	</button>
 	<button
-		class="add-block"
+		class="add-block ui-btn ui-btn-accent"
 		class:disabled={false}
 		on:click={() => {
 			showSelectBlock = true;
@@ -70,7 +70,7 @@
 		<AddBlocks size="36" />
 	</button>
 
-	<button on:click={() => (showMainSettingsModal = true)}>
+	<button class="ui-btn ui-btn-muted" on:click={() => (showMainSettingsModal = true)}>
 		<Settings size="32" />
 	</button>
 	<spacer />
@@ -91,35 +91,31 @@
 		justify-content: space-between;
 		align-items: center;
 		margin: 0 auto;
-		height: 64px;
+		height: 72px;
 		position: relative;
+		padding: 8px;
 	}
 
 	button {
-		background-color: hsl(0, 0%, 96%);
-		color: var(--color-text-0);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		height: 50px;
 		width: 50px;
-		border-radius: 25px;
 		padding: 0;
-		margin: 0 8px;
-		box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.5);
+		margin: 0 6px;
 	}
 
 	.add-block {
 		height: 60px;
 		width: 60px;
 		border-radius: 30px;
-		color: var(--color-text-1);
-		background-color: rgb(0, 132, 180);
+		color: #fff;
 	}
 
 	.disabled {
-		background-color: hsl(0, 0%, 92%);
-		color: hsl(0, 0%, 77%);
+		background-color: color-mix(in oklab, var(--md-surface-soft), transparent 22%);
+		color: var(--md-text-muted);
 	}
 
 	spacer {
@@ -130,10 +126,11 @@
 		position: absolute;
 		text-align: center;
 		font-size: 0.9em;
-		bottom: -20px;
+		bottom: -24px;
 		margin: 0;
 		padding: 0;
 		width: 100%;
+		color: var(--md-text-muted);
 	}
 
 	@keyframes heartbeat {

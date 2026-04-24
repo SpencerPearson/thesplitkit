@@ -17,7 +17,15 @@
 	}
 </script>
 
-<blurred-background on:mousedown|self={closeModal} on:touchend|self={closeModal}>
+<blurred-background
+	role="button"
+	tabindex="0"
+	on:mousedown|self={closeModal}
+	on:touchend|self={closeModal}
+	on:keydown={(event) => {
+		if (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ') closeModal();
+	}}
+>
 	<modal>
 		<button class="close icon" on:click={closeModal}>
 			<Close size="24" />
@@ -36,7 +44,7 @@
 		width: 100%;
 		height: 100%;
 		position: fixed;
-		background: transparent;
+		background: color-mix(in oklab, var(--md-bg), transparent 40%);
 		top: 0;
 		right: 0;
 		z-index: 99;
@@ -48,10 +56,11 @@
 		position: relative;
 		max-width: 960px;
 		overflow: hidden;
-		border-radius: 8px;
-		background-color: white;
-
-		box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 1);
+		border-radius: 16px;
+		background-color: var(--md-surface-elevated);
+		border: 1px solid var(--md-border);
+		color: var(--md-text);
+		box-shadow: var(--md-shadow);
 	}
 
 	modal-content {
@@ -68,7 +77,7 @@
 		right: 0;
 		background-color: transparent;
 		padding: 8px;
-		color: rgba(0, 0, 0, 0.75);
+		color: var(--md-text-muted);
 		z-index: 33;
 		border: 1px solid transparent;
 	}
